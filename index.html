@@ -1,1 +1,901 @@
-<!-- PLACEHOLDER - Will be replaced via API --><html><body><h1>Loading...</h1></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Transportes Pola — Operaciones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Syne+Mono&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#0e0f12;
+  --s1:#14161c;
+  --s2:#1a1d26;
+  --s3:#21253200;
+  --orange:#f5601a;
+  --orange2:#ff8040;
+  --green:#1ed760;
+  --red:#f03030;
+  --yellow:#f0b020;
+  --blue:#3a8ff0;
+  --purple:#9060f0;
+  --text:#edecea;
+  --text2:#9a9890;
+  --text3:#555350;
+  --border:#22252f;
+  --border2:#2e3240;
+}
+
+html,body{height:100%;font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);}
+
+/* ── SCREENS ── */
+.screen{display:none;height:100%;flex-direction:column;}
+.screen.active{display:flex;}
+
+/* ── HOME / SELECTOR ── */
+#home{
+  align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 40%, rgba(245,96,26,0.08) 0%, transparent 60%),
+             radial-gradient(ellipse at 70% 60%, rgba(30,215,96,0.05) 0%, transparent 60%),
+             var(--bg);
+}
+
+.home-inner{text-align:center;padding:32px 24px;}
+
+.home-logo{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:40px;
+}
+
+.logo-mark{
+  width:44px;height:44px;background:var(--orange);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne Mono',monospace;font-size:0.65rem;font-weight:700;
+  letter-spacing:0.05em;color:white;
+  box-shadow:0 0 30px rgba(245,96,26,0.4);
+}
+
+.home-title{
+  font-size:2rem;font-weight:800;letter-spacing:-0.02em;line-height:1.1;
+  margin-bottom:8px;
+}
+.home-title span{color:var(--orange);}
+.home-sub{font-size:0.85rem;color:var(--text2);margin-bottom:48px;}
+
+.role-cards{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:0 auto;}
+
+.role-card{
+  padding:20px 24px;
+  border:1px solid var(--border2);
+  border-radius:14px;
+  background:var(--s1);
+  cursor:pointer;
+  text-align:left;
+  transition:all 0.2s;
+  display:flex;align-items:center;gap:16px;
+}
+
+.role-card:hover{
+  border-color:var(--orange);
+  background:rgba(245,96,26,0.06);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(245,96,26,0.15);
+}
+
+.role-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+
+.role-icon.dispatch{background:rgba(245,96,26,0.12);border:1px solid rgba(245,96,26,0.2);}
+.role-icon.ops{background:rgba(30,215,96,0.1);border:1px solid rgba(30,215,96,0.15);}
+
+.role-text{}
+.role-name{font-size:0.95rem;font-weight:700;margin-bottom:3px;}
+.role-desc{font-size:0.75rem;color:var(--text2);}
+
+/* ── TOPBAR ── */
+.topbar{
+  height:50px;
+  background:var(--s1);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;flex-shrink:0;
+}
+
+.tb-left{display:flex;align-items:center;gap:10px;}
+.tb-logo{
+  background:var(--orange);color:white;
+  font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:700;
+  padding:3px 7px;border-radius:5px;letter-spacing:0.1em;
+}
+.tb-title{font-size:0.82rem;font-weight:700;color:var(--text2);}
+.tb-title strong{color:var(--text);}
+
+.tb-back{
+  background:var(--s2);border:1px solid var(--border2);
+  color:var(--text2);font-family:'Syne',sans-serif;font-size:0.75rem;
+  padding:5px 12px;border-radius:7px;cursor:pointer;
+  transition:all 0.15s;
+}
+.tb-back:hover{color:var(--text);border-color:var(--orange);}
+
+/* ── DISPATCH FORM ── */
+#dispatch{background:var(--bg);}
+
+.form-body{
+  flex:1;overflow-y:auto;padding:16px;
+  display:flex;flex-direction:column;gap:12px;
+}
+
+.form-section{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+}
+
+.fs-header{
+  padding:10px 14px;
+  background:var(--s2);
+  border-bottom:1px solid var(--border);
+  font-family:'Syne Mono',monospace;
+  font-size:0.6rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);
+}
+
+.fs-header span{color:var(--orange);}
+
+.field{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.field:last-child{border-bottom:none;}
+
+.field label{
+  display:block;
+  font-size:0.68rem;font-weight:600;
+  color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;
+  margin-bottom:7px;
+}
+
+.field select,
+.field input{
+  width:100%;
+  background:var(--s2);
+  border:1px solid var(--border2);
+  border-radius:8px;
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-size:0.9rem;
+  padding:11px 12px;
+  -webkit-appearance:none;
+  appearance:none;
+  transition:border-color 0.15s;
+}
+
+.field select:focus,
+.field input:focus{
+  outline:none;
+  border-color:var(--orange);
+  box-shadow:0 0 0 2px rgba(245,96,26,0.15);
+}
+
+.field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23555350'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  padding-right:32px;
+}
+
+.field input::placeholder{color:var(--text3);}
+
+.form-footer{
+  padding:16px;flex-shrink:0;
+  border-top:1px solid var(--border);
+  background:var(--s1);
+}
+
+.btn-submit{
+  width:100%;padding:16px;
+  background:var(--orange);
+  border:none;border-radius:12px;
+  color:white;font-family:'Syne',sans-serif;
+  font-size:1rem;font-weight:800;
+  letter-spacing:0.02em;cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 4px 20px rgba(245,96,26,0.3);
+}
+
+.btn-submit:hover{background:var(--orange2);transform:translateY(-1px);box-shadow:0 8px 28px rgba(245,96,26,0.4);}
+.btn-submit:active{transform:translateY(0);}
+.btn-submit:disabled{background:var(--s2);color:var(--text3);box-shadow:none;cursor:not-allowed;transform:none;}
+
+/* SUCCESS STATE */
+.success-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(14,15,18,0.95);
+  z-index:100;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  text-align:center;padding:32px;
+}
+
+.success-overlay.show{display:flex;}
+
+.success-icon{
+  width:72px;height:72px;
+  background:rgba(30,215,96,0.15);
+  border:2px solid var(--green);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+.success-title{font-size:1.3rem;font-weight:800;color:var(--green);}
+.success-sub{font-size:0.82rem;color:var(--text2);}
+.success-detail{
+  background:var(--s1);border:1px solid var(--border2);
+  border-radius:10px;padding:14px 20px;
+  font-family:'Syne Mono',monospace;font-size:0.75rem;
+  color:var(--text2);line-height:1.8;text-align:left;
+  max-width:320px;width:100%;
+}
+.success-detail strong{color:var(--orange);}
+
+.btn-new{
+  margin-top:8px;padding:14px 32px;
+  background:var(--s2);border:1px solid var(--border2);
+  border-radius:10px;color:var(--text);
+  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;
+  cursor:pointer;transition:all 0.15s;
+}
+.btn-new:hover{border-color:var(--orange);color:var(--orange);}
+
+/* ── OPS SCREEN ── */
+#ops{
+  background:var(--bg);
+}
+
+.ops-body{
+  flex:1;display:flex;overflow:hidden;
+}
+
+/* LEFT: viajes activos */
+.ops-left{
+  width:380px;flex-shrink:0;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+
+.ops-left-header{
+  padding:12px 14px;
+  background:var(--s1);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+.olh-title{
+  font-family:'Syne Mono',monospace;
+  font-size:0.62rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);
+}
+.olh-title span{color:var(--orange);}
+
+.live-badge{
+  display:flex;align-items:center;gap:5px;
+  font-family:'Syne Mono',monospace;font-size:0.58rem;
+  color:var(--green);
+  background:rgba(30,215,96,0.08);
+  border:1px solid rgba(30,215,96,0.15);
+  padding:2px 8px;border-radius:20px;
+}
+
+.live-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.trips-list{
+  flex:1;overflow-y:auto;
+}
+
+.trip-card{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background 0.1s;
+  position:relative;
+}
+
+.trip-card:hover{background:rgba(245,96,26,0.04);}
+.trip-card.selected{background:rgba(245,96,26,0.06);border-left:2px solid var(--orange);}
+
+.tc-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:6px;
+}
+
+.tc-patente{
+  font-family:'Syne Mono',monospace;
+  font-size:0.82rem;font-weight:600;color:var(--orange);
+}
+
+.tc-hora{
+  font-family:'Syne Mono',monospace;
+  font-size:0.6rem;color:var(--text3);
+}
+
+.tc-conductor{
+  font-size:0.78rem;font-weight:600;color:var(--text);
+  margin-bottom:4px;
+}
+
+.tc-ruta{
+  font-size:0.72rem;color:var(--text2);
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:5px;
+}
+
+.tc-ruta .arrow{color:var(--text3);}
+
+.tc-tags{display:flex;gap:5px;flex-wrap:wrap;}
+
+.tc-tag{
+  display:inline-flex;padding:2px 7px;
+  border-radius:4px;font-size:0.6rem;font-weight:700;
+  font-family:'Syne Mono',monospace;
+}
+
+.tc-tag.carga{background:rgba(245,96,26,0.1);color:var(--orange2);}
+.tc-tag.cliente{background:rgba(58,143,240,0.1);color:var(--blue);}
+.tc-tag.intl{background:rgba(144,96,240,0.1);color:var(--purple);}
+.tc-tag.nac{background:rgba(30,215,96,0.08);color:var(--green);}
+
+/* empty state */
+.empty-state{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;padding:32px;text-align:center;
+}
+
+.empty-icon{font-size:2.5rem;opacity:0.3;}
+.empty-title{font-size:0.88rem;font-weight:700;color:var(--text2);}
+.empty-sub{font-size:0.72rem;color:var(--text3);}
+
+/* add trip btn */
+.add-trip-btn{
+  margin:12px 14px;padding:11px;
+  background:rgba(245,96,26,0.08);
+  border:1px dashed rgba(245,96,26,0.3);
+  border-radius:10px;
+  color:var(--orange);font-family:'Syne',sans-serif;
+  font-size:0.8rem;font-weight:700;
+  cursor:pointer;text-align:center;
+  transition:all 0.15s;flex-shrink:0;
+}
+.add-trip-btn:hover{background:rgba(245,96,26,0.12);border-color:var(--orange);}
+
+/* RIGHT: GPS */
+.ops-right{
+  flex:1;display:flex;flex-direction:column;
+  overflow:hidden;position:relative;
+}
+
+.gps-bar{
+  height:38px;
+  background:var(--s1);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 14px;flex-shrink:0;
+}
+
+.gps-bar-title{
+  font-family:'Syne Mono',monospace;
+  font-size:0.6rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text3);
+}
+.gps-bar-title span{color:var(--green);}
+
+.gps-frame{
+  flex:1;
+  background:#0a0c10;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Wialon embed placeholder */
+.wialon-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:14px;text-align:center;padding:32px;
+}
+
+.wp-icon{font-size:3rem;opacity:0.15;}
+
+.wp-title{
+  font-size:1rem;font-weight:800;color:var(--text2);
+}
+
+.wp-desc{font-size:0.78rem;color:var(--text3);line-height:1.6;max-width:360px;}
+
+.wp-code{
+  background:var(--s1);border:1px solid var(--border2);
+  border-radius:8px;padding:12px 16px;
+  font-family:'Syne Mono',monospace;font-size:0.7rem;
+  color:var(--orange);text-align:left;
+  max-width:420px;width:100%;line-height:1.8;
+}
+
+.wp-steps{
+  background:var(--s1);border:1px solid var(--border2);
+  border-radius:10px;padding:16px 20px;
+  max-width:420px;width:100%;text-align:left;
+}
+
+.wp-step{
+  display:flex;gap:10px;font-size:0.75rem;
+  color:var(--text2);margin-bottom:10px;line-height:1.5;
+}
+.wp-step:last-child{margin-bottom:0;}
+
+.wp-step-n{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--orange);color:white;
+  font-size:0.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+
+/* STATUS BAR */
+.status-bar{
+  height:28px;background:var(--s1);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  padding:0 14px;flex-shrink:0;
+  font-family:'Syne Mono',monospace;
+  font-size:0.58rem;color:var(--text3);
+}
+
+.sb-dot{width:5px;height:5px;border-radius:50%;}
+.sb-dot.g{background:var(--green);}
+.sb-dot.r{background:var(--red);animation:pulse 1.5s infinite;}
+.sb-dot.o{background:var(--orange);}
+
+.sb-item{display:flex;align-items:center;gap:5px;}
+.sb-right{margin-left:auto;color:var(--text3);}
+
+/* scrollbar */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+/* mobile adjustments */
+@media(max-width:640px){
+  .ops-left{width:100%;}
+  .ops-right{display:none;}
+  .ops-left.hide{display:none;}
+  .ops-right.show{display:flex;position:fixed;inset:50px 0 28px 0;}
+  .home-title{font-size:1.6rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="home">
+  <div class="home-inner">
+    <div class="home-logo">
+      <div class="logo-mark">POLA</div>
+    </div>
+    <h1 class="home-title">Transportes<br><span>Pola</span></h1>
+    <p class="home-sub">Sistema de operaciones · ¿Quién sos?</p>
+
+    <div class="role-cards">
+      <div class="role-card" onclick="goTo('dispatch')">
+        <div class="role-icon dispatch">📋</div>
+        <div class="role-text">
+          <div class="role-name">Catalina — Despacho</div>
+          <div class="role-desc">Registrar salida de camión</div>
+        </div>
+      </div>
+      <div class="role-card" onclick="goTo('ops')">
+        <div class="role-icon ops">🖥️</div>
+        <div class="role-text">
+          <div class="role-name">Joaquín — Operaciones</div>
+          <div class="role-desc">Ver viajes activos + GPS en vivo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DISPATCH ══ -->
+<div class="screen" id="dispatch">
+
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo">POLA</div>
+      <div class="tb-title">Despacho de <strong>viaje</strong></div>
+    </div>
+    <div class="tb-back" onclick="goTo('home')">← Volver</div>
+  </div>
+
+  <div class="form-body">
+
+    <div class="form-section">
+      <div class="fs-header"><span>01</span> · Equipo</div>
+      <div class="field">
+        <label>Patente tracto</label>
+        <select id="f-tracto">
+          <option value="">Seleccionar tracto...</option>
+          <option>DBCY-48</option><option>DJZD-92</option><option>DPJR-64</option>
+          <option>DRKG-75</option><option>GSVC-91</option><option>GSVC-92</option>
+          <option>HDPX-57</option><option>HDPX-58</option><option>HDPX-59</option>
+          <option>CPFF-19</option><option>PYCF-69</option><option>JTVH-78</option>
+          <option>SJJW-71</option><option>SJJW-83</option><option>LLXF-38</option>
+          <option>LKVW-35</option><option>PLZR-34</option><option>PSXG-52</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Semirremolque</label>
+        <select id="f-semi">
+          <option value="">Seleccionar semi...</option>
+          <option>HXGX-47</option><option>JD-1915</option><option>JC-1922</option>
+          <option>JG-7922</option><option>JH-4611</option><option>JH-4612</option>
+          <option>JH-7549</option><option>JA-7004</option><option>JF-5557</option>
+          <option>GRGF-13</option><option>KYLH-96</option><option>KDJL-85</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Conductor</label>
+        <select id="f-conductor">
+          <option value="">Seleccionar conductor...</option>
+          <option>JOSE JARA</option><option>CAMILO HIDALGO</option><option>JUAN NAVARRO</option>
+          <option>MARCO PODESTA</option><option>LUIS GONZALEZ</option><option>NELSON MUÑOZ</option>
+          <option>LUCIANO VILLEGAS</option><option>ALFREDO VIDAL</option><option>OSCAR CARTER</option>
+          <option>JOSE MARTINEZ</option><option>LEONEL CAYUMAN</option><option>CARLO ANABALON</option>
+          <option>RENE LANDEROS</option><option>BALTAZAR CHAPERON</option><option>ALEJANDRO BARRA</option>
+          <option>MIGUEL NAVARRO</option><option>CAMILO MUÑOZ</option><option>PEDRO SANSONETHY</option>
+          <option>EUGENIO MUÑOZ</option><option>LUIS AVILA</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="fs-header"><span>02</span> · Carga</div>
+      <div class="field">
+        <label>Cliente</label>
+        <select id="f-cliente">
+          <option value="">Seleccionar cliente...</option>
+          <option>VDA</option><option>ESMAX</option><option>ENFLEX</option>
+          <option>NEW ANDES CHEMICALS</option><option>ENEX</option>
+          <option>QUIMICA LATINOAMERICANA</option><option>LOGINET</option>
+          <option>VOLCAN</option><option>COVAEM</option><option>COAGRA</option>
+          <option>PACIFICO SUR</option><option>BULLCOM</option><option>DIDEVAL</option>
+          <option>BITUMIX</option><option>RENO</option><option>LUVAL</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Producto / carga</label>
+        <select id="f-producto">
+          <option value="">Seleccionar producto...</option>
+          <option>DIESEL</option><option>GASOLINA 93</option><option>GASOLINA 95</option>
+          <option>GASOLINA 97</option><option>JET</option><option>ALCOHOL</option>
+          <option>VINO</option><option>PISCO</option><option>AGUARRAS</option>
+          <option>SOLVENTE B</option><option>AROMATICO PESADO</option><option>BUTIL GLICOL</option>
+          <option>EMULSION ASFALTICA</option><option>ASFALTO</option>
+          <option>ACIDO SULFURICO</option><option>NAFTA</option>
+          <option>MEZCLA HIDROCARBUROS</option><option>COVESOL</option>
+          <option>AXXSOL 30</option><option>INTERFASES</option>
+          <option>COLPA CHANCADA</option><option>VOLCANITA</option>
+          <option>FRUTA</option><option>CONTENEDOR</option><option>VACIO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="fs-header"><span>03</span> · Ruta</div>
+      <div class="field">
+        <label>Origen</label>
+        <input type="text" id="f-origen" placeholder="Ciudad o planta de carga...">
+      </div>
+      <div class="field">
+        <label>Destino</label>
+        <input type="text" id="f-destino" placeholder="Ciudad o planta de descarga...">
+      </div>
+      <div class="field">
+        <label>¿Operación internacional?</label>
+        <select id="f-intl">
+          <option value="NO">No — solo Chile</option>
+          <option value="SI">Sí — Chile / Argentina</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="fs-header"><span>04</span> · Detalle (opcional)</div>
+      <div class="field">
+        <label>Observaciones</label>
+        <input type="text" id="f-obs" placeholder="Notas, guía, instrucciones...">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-footer">
+    <button class="btn-submit" id="submitBtn" onclick="submitTrip()">
+      Registrar salida del camión
+    </button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Viaje registrado</div>
+    <div class="success-sub" id="successTime"></div>
+    <div class="success-detail" id="successDetail"></div>
+    <button class="btn-new" onclick="resetForm()">Registrar otro viaje</button>
+  </div>
+
+</div>
+
+<!-- ══ OPS ══ -->
+<div class="screen" id="ops">
+
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo">POLA</div>
+      <div class="tb-title"><strong>Operaciones</strong> en vivo</div>
+    </div>
+    <div class="tb-back" onclick="goTo('home')">← Inicio</div>
+  </div>
+
+  <div class="ops-body">
+
+    <!-- LEFT: VIAJES -->
+    <div class="ops-left" id="opsList">
+
+      <div class="ops-left-header">
+        <div class="olh-title">Viajes activos · <span id="tripCount">0</span></div>
+        <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
+      </div>
+
+      <div class="trips-list" id="tripsList">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">🚛</div>
+          <div class="empty-title">Sin viajes registrados hoy</div>
+          <div class="empty-sub">Catalina registra la salida de cada camión y aparece acá al instante</div>
+        </div>
+      </div>
+
+      <div class="add-trip-btn" onclick="goTo('dispatch')">
+        + Registrar salida manual
+      </div>
+
+    </div>
+
+    <!-- RIGHT: GPS -->
+    <div class="ops-right">
+
+      <div class="gps-bar">
+        <div class="gps-bar-title">GPS · <span>Wialon en vivo</span></div>
+        <div style="font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--text3);">
+          16 unidades
+        </div>
+      </div>
+
+      <div class="gps-frame">
+        <div class="wialon-placeholder">
+          <div class="wp-icon">🗺️</div>
+          <div class="wp-title">Conectá Wialon acá</div>
+          <div class="wp-desc">El mapa GPS en vivo se muestra en este panel. Para activarlo seguís estos 3 pasos en Wialon:</div>
+
+          <div class="wp-steps">
+            <div class="wp-step">
+              <div class="wp-step-n">1</div>
+              <div>Entrá a <strong>hst.wialon.com</strong> con tu usuario y contraseña</div>
+            </div>
+            <div class="wp-step">
+              <div class="wp-step-n">2</div>
+              <div>En la vista del mapa, buscá el ícono <strong>⚙ Configuración</strong> → <strong>Compartir mapa</strong> o <strong>Enlace de acceso público</strong></div>
+            </div>
+            <div class="wp-step">
+              <div class="wp-step-n">3</div>
+              <div>Copiá ese link y mandámelo — yo actualizo esta pantalla con el mapa real en 5 minutos</div>
+            </div>
+          </div>
+
+          <div class="wp-code">
+            <!-- El link que me pases va acá: -->
+            &lt;iframe src="TU_LINK_WIALON"
+            &nbsp;&nbsp;width="100%" height="100%"
+            &nbsp;&nbsp;frameborder="0"&gt;
+            &lt;/iframe&gt;
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="status-bar">
+    <div class="sb-item"><div class="sb-dot g"></div><span id="sbActive">0 en ruta</span></div>
+    <div class="sb-item"><div class="sb-dot o"></div><span id="sbToday">0 viajes hoy</span></div>
+    <div class="sb-right" id="sbTime"></div>
+  </div>
+
+</div>
+
+<script>
+// ── STORAGE KEY ──
+const STORAGE_KEY = 'pola_trips_v1';
+
+// ── NAVIGATION ──
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'ops') renderTrips();
+}
+
+// ── TRIPS DATA ──
+function getTrips() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function saveTrip(trip) {
+  const trips = getTrips();
+  trips.unshift(trip);
+  // keep last 200
+  if (trips.length > 200) trips.pop();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+}
+
+// ── SUBMIT ──
+function submitTrip() {
+  const tracto   = document.getElementById('f-tracto').value;
+  const semi     = document.getElementById('f-semi').value;
+  const conductor= document.getElementById('f-conductor').value;
+  const cliente  = document.getElementById('f-cliente').value;
+  const producto = document.getElementById('f-producto').value;
+  const origen   = document.getElementById('f-origen').value.trim();
+  const destino  = document.getElementById('f-destino').value.trim();
+  const intl     = document.getElementById('f-intl').value;
+  const obs      = document.getElementById('f-obs').value.trim();
+
+  // validation
+  if (!tracto || !conductor || !cliente || !producto || !origen || !destino) {
+    alert('Por favor completá los campos obligatorios: tracto, conductor, cliente, producto, origen y destino.');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  const now = new Date();
+  const trip = {
+    id: Date.now(),
+    fecha: now.toLocaleDateString('es-CL'),
+    hora: now.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'}),
+    tracto, semi, conductor, cliente, producto,
+    origen, destino, intl, obs,
+    estado: 'EN RUTA'
+  };
+
+  saveTrip(trip);
+
+  // show success
+  const overlay = document.getElementById('successOverlay');
+  document.getElementById('successTime').textContent =
+    now.toLocaleString('es-CL', {dateStyle:'short', timeStyle:'short'});
+  document.getElementById('successDetail').innerHTML =
+    `<strong>${tracto}</strong> · ${semi || '—'}<br>` +
+    `${conductor}<br>` +
+    `${cliente} · ${producto}<br>` +
+    `${origen} → ${destino}` +
+    (obs ? `<br><em>${obs}</em>` : '');
+
+  overlay.classList.add('show');
+  btn.disabled = false;
+  btn.textContent = 'Registrar salida del camión';
+}
+
+function resetForm() {
+  document.getElementById('successOverlay').classList.remove('show');
+  ['f-tracto','f-semi','f-conductor','f-cliente','f-producto','f-intl'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  ['f-origen','f-destino','f-obs'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
+// ── RENDER TRIPS ──
+function renderTrips() {
+  const trips = getTrips();
+  const list = document.getElementById('tripsList');
+  const empty = document.getElementById('emptyState');
+  const count = document.getElementById('tripCount');
+  const sbActive = document.getElementById('sbActive');
+  const sbToday = document.getElementById('sbToday');
+
+  // filter today
+  const today = new Date().toLocaleDateString('es-CL');
+  const todayTrips = trips.filter(t => t.fecha === today);
+  const enRuta = todayTrips.filter(t => t.estado === 'EN RUTA');
+
+  count.textContent = todayTrips.length;
+  sbActive.textContent = enRuta.length + ' en ruta';
+  sbToday.textContent = todayTrips.length + ' viajes hoy';
+
+  // remove existing cards
+  list.querySelectorAll('.trip-card').forEach(c => c.remove());
+
+  if (todayTrips.length === 0) {
+    empty.style.display = 'flex';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  todayTrips.forEach((trip, i) => {
+    const card = document.createElement('div');
+    card.className = 'trip-card' + (i === 0 ? ' selected' : '');
+    card.innerHTML = `
+      <div class="tc-top">
+        <div class="tc-patente">${trip.tracto}</div>
+        <div class="tc-hora">${trip.hora}</div>
+      </div>
+      <div class="tc-conductor">${trip.conductor}</div>
+      <div class="tc-ruta">
+        <span>${trip.origen}</span>
+        <span class="arrow">→</span>
+        <span>${trip.destino}</span>
+      </div>
+      <div class="tc-tags">
+        <span class="tc-tag carga">${trip.producto}</span>
+        <span class="tc-tag cliente">${trip.cliente}</span>
+        ${trip.intl === 'SI' ? '<span class="tc-tag intl">INTL</span>' : '<span class="tc-tag nac">NAC</span>'}
+        ${trip.semi ? '<span class="tc-tag" style="background:rgba(255,255,255,0.04);color:#555350;">'+trip.semi+'</span>' : ''}
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+// ── CLOCK ──
+function tick() {
+  const now = new Date();
+  const el = document.getElementById('sbTime');
+  if (el) el.textContent = now.toLocaleTimeString('es-CL', {hour12:false});
+}
+tick();
+setInterval(tick, 1000);
+
+// auto-refresh ops every 30s
+setInterval(() => {
+  if (document.getElementById('ops').classList.contains('active')) {
+    renderTrips();
+  }
+}, 30000);
+</script>
+</body>
+</html>
