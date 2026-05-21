@@ -1429,6 +1429,26 @@ setInterval(() => {
     renderTrips();
   }
 }, 30000);
+
+// ── SINCRONIZACIÓN EN TIEMPO REAL (Joaquín ve los viajes de Catalina en 30s) ──
+async function cargarViajes() {
+  const url = localStorage.getItem('pola_script_url');
+  if (!url) return;
+  try {
+    const r = await fetch(url + '?action=getViajes');
+    const d = await r.json();
+    if (d.ok && Array.isArray(d.viajes)) {
+      trips = d.viajes;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+      renderTrips();
+    }
+  } catch(e) { console.log('Sync error:', e); }
+}
+
+// Cargar al inicio y cada 30 segundos
+cargarViajes();
+setInterval(cargarViajes, 30000);
+
 </script>
 </body>
 </html>
