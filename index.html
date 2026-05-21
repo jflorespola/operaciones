@@ -1459,7 +1459,7 @@ saveTrip = function(trip) {
   if (url) {
     fetch(url, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'text/plain'},
       body: JSON.stringify({action: 'saveViaje', ...trip})
     }).catch(e => console.log('Error enviando viaje:', e));
   }
