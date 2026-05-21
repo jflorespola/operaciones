@@ -1449,6 +1449,23 @@ async function cargarViajes() {
 cargarViajes();
 setInterval(cargarViajes, 30000);
 
+// ── ENVIAR viaje al Apps Script (para que aparezca en Joaquín) ──
+const _origSaveTrip = saveTrip;
+saveTrip = function(trip) {
+  // Guardar localmente primero (comportamiento original)
+  _origSaveTrip(trip);
+  // Enviar al Apps Script en background
+  const url = localStorage.getItem('pola_script_url');
+  if (url) {
+    fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'saveViaje', ...trip})
+    }).catch(e => console.log('Error enviando viaje:', e));
+  }
+};
+
+
 </script>
 </body>
 </html>
