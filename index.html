@@ -1438,7 +1438,7 @@ async function cargarViajes() {
     const r = await fetch(url + '?action=getViajes');
     const d = await r.json();
     if (d.ok && Array.isArray(d.viajes)) {
-      trips = d.viajes;
+      trips = (d.viajes||[]).map(v => { if(v.fecha && String(v.fecha).includes("T")) { const dt=new Date(v.fecha); v.fecha=dt.toLocaleDateString("es-CL"); } return v; });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
       renderTrips();
     }
