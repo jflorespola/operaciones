@@ -1271,8 +1271,8 @@ async function confirmarTerminado() {
       await fetch(scriptUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(registro)
+        headers: {'Content-Type':'text/plain'},
+        body: JSON.stringify(Object.assign({action:'saveViaje'},registro))
       });
       sentOk = true;
     } catch(e) {
