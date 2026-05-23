@@ -1233,7 +1233,7 @@ async function confirmarTerminado() {
   const trips = getTrips();
   const trip  = trips.find(t => t.id === id);
   if (!trip) return;
-
+obsDescarga || '—',
   const now   = new Date();
   const mes   = now.toLocaleString('es-CL', {month:'long', year:'numeric'});
 
@@ -1256,6 +1256,7 @@ async function confirmarTerminado() {
     intl:          trip.intl,
     obs:           trip.obs || '—',
     obsDescarga:   obsDescarga || '—',
+        id:           trip.id,
   };
 
   const btn = document.getElementById('btnConfirm');
