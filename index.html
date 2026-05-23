@@ -1348,7 +1348,7 @@ function renderTrips() {
   const sbToday = document.getElementById('sbToday');
 
   const today = new Date().toLocaleDateString('es-CL');
-  const todayTrips = trips.filter(t => t.fecha === today);
+  const todayTrips = trips.filter(t => t.estado !== 'TERMINADO');
   const enRuta = todayTrips.filter(t => t.estado === 'EN RUTA').length;
 
   count.textContent = todayTrips.length;
