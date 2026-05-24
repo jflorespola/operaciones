@@ -1171,19 +1171,42 @@ const ESTADOS = {
 let _pendingTerminarId = null;
 
 function updateEstado(id, nuevoEstado) {
-  if (nuevoEstado === 'TERMINADO') {
-    openTerminarModal(id);
-    return;
-  }
-  const trips = getTrips();
-  const idx = trips.findIndex(t => t.id === id);
-  if (idx !== -1) {
-    trips[idx].estado = nuevoEstado;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
-    renderTrips();
-  }
+if (nuevoEstado === 'TERMINADO') {
+openTerminarModal(id);
+return;
+}
+const trips = getTrips();
+const idx = trips.findIndex(t => t.id === id);
+if (idx !== -1) {
+trips[idx].estado = nuevoEstado;
+localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+
+// Sincronizar estado con Google Sheets
+const url = localStorage.getItem('pola_script_url');
+if (url) {
+const trip = trips[idx];
+fetch(url, {
+method: 'POST',
+mode: 'no-cors',
+headers: {'Content-Type': 'text/plain'},
+body: JSON.stringify({
+action: 'updateEstado',
+id: id,
+estado: nuevoEstado,
+tracto: trip.tracto,
+conductor: trip.conductor,
+cliente: trip.cliente,
+producto: trip.producto,
+origen: trip.origen,
+destino: trip.destino,
+fechaActualizacion: new Date().toLocaleString('es-CL')
+})
+}).catch(e => console.warn('Error sync estado:', e));
 }
 
+renderTrips();
+}
+}
 // ── TERMINAR MODAL ──
 function openTerminarModal(id) {
   _pendingTerminarId = id;
