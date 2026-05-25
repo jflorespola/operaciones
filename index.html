@@ -466,12 +466,18 @@ function renderAdmin() {
       const isBase=BASES[key].includes(item);
       const div=document.createElement('div');
       div.className='admin-item'+(isBase?' default':'');
-      const safe=item.replace(/\/g,'\\').replace(/'/g,"\'");
-      div.innerHTML='<span>'+item+'</span>'+(
-        !isBase
-          ?'<button class="admin-item-del" onclick="removeItem(\''+key+'\',\''+safe+'\')">✕</button>'
-          :'<span style="font-size:0.6rem;color:var(--text3);font-family:Syne Mono,monospace;">base</span>'
-      );
+      const span=document.createElement('span');span.textContent=item;
+      div.appendChild(span);
+      if (!isBase){
+        const btn=document.createElement('button');
+        btn.className='admin-item-del';btn.textContent='✕';
+        btn.onclick=function(){removeItem(key,item);};
+        div.appendChild(btn);
+      } else {
+        const lbl=document.createElement('span');
+        lbl.style.cssText='font-size:0.6rem;color:var(--text3);font-family:Syne Mono,monospace;';
+        lbl.textContent='base';div.appendChild(lbl);
+      }
       list.appendChild(div);
     });
   });
