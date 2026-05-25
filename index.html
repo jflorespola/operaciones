@@ -6,1489 +6,691 @@
 <title>Transportes Pola — Operaciones</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Syne+Mono&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
-  --bg:#0e0f12;
-  --s1:#14161c;
-  --s2:#1a1d26;
-  --s3:#21253200;
-  --orange:#f5601a;
-  --orange2:#ff8040;
-  --green:#1ed760;
-  --red:#f03030;
-  --yellow:#f0b020;
-  --blue:#3a8ff0;
-  --purple:#9060f0;
-  --text:#edecea;
-  --text2:#9a9890;
-  --text3:#555350;
-  --border:#22252f;
-  --border2:#2e3240;
-}
-
+:root{--bg:#0e0f12;--s1:#14161c;--s2:#1a1d26;--s3:#21253200;--orange:#f5601a;--orange2:#ff8040;--green:#1ed760;--red:#f03030;--yellow:#f0b020;--blue:#3a8ff0;--purple:#9060f0;--text:#edecea;--text2:#9a9890;--text3:#555350;--border:#22252f;--border2:#2e3240;}
 html,body{height:100%;font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);}
-
-/* ── SCREENS ── */
 .screen{display:none;height:100%;flex-direction:column;}
 .screen.active{display:flex;}
-
-/* ── HOME / SELECTOR ── */
-#home{
-  align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 30% 40%, rgba(245,96,26,0.08) 0%, transparent 60%),
-             radial-gradient(ellipse at 70% 60%, rgba(30,215,96,0.05) 0%, transparent 60%),
-             var(--bg);
-}
-
+#home{align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%, rgba(245,96,26,0.08) 0%, transparent 60%),radial-gradient(ellipse at 70% 60%, rgba(30,215,96,0.05) 0%, transparent 60%),var(--bg);}
 .home-inner{text-align:center;padding:32px 24px;}
-
-.home-logo{
-  display:inline-flex;align-items:center;gap:10px;
-  margin-bottom:40px;
-}
-
-.logo-mark{
-  width:44px;height:44px;background:var(--orange);border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Syne Mono',monospace;font-size:0.65rem;font-weight:700;
-  letter-spacing:0.05em;color:white;
-  box-shadow:0 0 30px rgba(245,96,26,0.4);
-}
-
-.home-title{
-  font-size:2rem;font-weight:800;letter-spacing:-0.02em;line-height:1.1;
-  margin-bottom:8px;
-}
+.home-logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:40px;}
+.logo-mark{width:44px;height:44px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne Mono',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;color:white;box-shadow:0 0 30px rgba(245,96,26,0.4);}
+.home-title{font-size:2rem;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-bottom:8px;}
 .home-title span{color:var(--orange);}
 .home-sub{font-size:0.85rem;color:var(--text2);margin-bottom:48px;}
-
 .role-cards{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:0 auto;}
-
-.role-card{
-  padding:20px 24px;
-  border:1px solid var(--border2);
-  border-radius:14px;
-  background:var(--s1);
-  cursor:pointer;
-  text-align:left;
-  transition:all 0.2s;
-  display:flex;align-items:center;gap:16px;
-}
-
-.role-card:hover{
-  border-color:var(--orange);
-  background:rgba(245,96,26,0.06);
-  transform:translateY(-2px);
-  box-shadow:0 8px 32px rgba(245,96,26,0.15);
-}
-
-.role-icon{
-  width:44px;height:44px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;flex-shrink:0;
-}
-
+.role-card{padding:20px 24px;border:1px solid var(--border2);border-radius:14px;background:var(--s1);cursor:pointer;text-align:left;transition:all 0.2s;display:flex;align-items:center;gap:16px;}
+.role-card:hover{border-color:var(--orange);background:rgba(245,96,26,0.06);transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,96,26,0.15);}
+.role-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
 .role-icon.dispatch{background:rgba(245,96,26,0.12);border:1px solid rgba(245,96,26,0.2);}
 .role-icon.ops{background:rgba(30,215,96,0.1);border:1px solid rgba(30,215,96,0.15);}
-
-.role-text{}
+.role-icon.admin{background:rgba(144,96,240,0.12);border:1px solid rgba(144,96,240,0.2);}
 .role-name{font-size:0.95rem;font-weight:700;margin-bottom:3px;}
 .role-desc{font-size:0.75rem;color:var(--text2);}
-
-/* ── TOPBAR ── */
-.topbar{
-  height:50px;
-  background:var(--s1);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 16px;flex-shrink:0;
-}
-
+.topbar{height:50px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;}
 .tb-left{display:flex;align-items:center;gap:10px;}
-.tb-logo{
-  background:var(--orange);color:white;
-  font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:700;
-  padding:3px 7px;border-radius:5px;letter-spacing:0.1em;
-}
+.tb-logo{background:var(--orange);color:white;font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:700;padding:3px 7px;border-radius:5px;letter-spacing:0.1em;}
 .tb-title{font-size:0.82rem;font-weight:700;color:var(--text2);}
 .tb-title strong{color:var(--text);}
-
-.tb-back{
-  background:var(--s2);border:1px solid var(--border2);
-  color:var(--text2);font-family:'Syne',sans-serif;font-size:0.75rem;
-  padding:5px 12px;border-radius:7px;cursor:pointer;
-  transition:all 0.15s;
-}
+.tb-back{background:var(--s2);border:1px solid var(--border2);color:var(--text2);font-family:'Syne',sans-serif;font-size:0.75rem;padding:5px 12px;border-radius:7px;cursor:pointer;transition:all 0.15s;}
 .tb-back:hover{color:var(--text);border-color:var(--orange);}
-
-/* ── DISPATCH FORM ── */
 #dispatch{background:var(--bg);}
-
-.form-body{
-  flex:1;overflow-y:auto;padding:16px;
-  display:flex;flex-direction:column;gap:12px;
-}
-
-.form-section{
-  background:var(--s1);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;
-}
-
-.fs-header{
-  padding:10px 14px;
-  background:var(--s2);
-  border-bottom:1px solid var(--border);
-  font-family:'Syne Mono',monospace;
-  font-size:0.6rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.1em;
-  color:var(--text3);
-}
-
+.form-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.form-section{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.fs-header{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--border);font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);}
 .fs-header span{color:var(--orange);}
-
-.field{
-  padding:12px 14px;
-  border-bottom:1px solid var(--border);
-}
+.field{padding:12px 14px;border-bottom:1px solid var(--border);}
 .field:last-child{border-bottom:none;}
-
-.field label{
-  display:block;
-  font-size:0.68rem;font-weight:600;
-  color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;
-  margin-bottom:7px;
-}
-
-.field select,
-.field input{
-  width:100%;
-  background:var(--s2);
-  border:1px solid var(--border2);
-  border-radius:8px;
-  color:var(--text);
-  font-family:'Syne',sans-serif;
-  font-size:0.9rem;
-  padding:11px 12px;
-  -webkit-appearance:none;
-  appearance:none;
-  transition:border-color 0.15s;
-}
-
-.field select:focus,
-.field input:focus{
-  outline:none;
-  border-color:var(--orange);
-  box-shadow:0 0 0 2px rgba(245,96,26,0.15);
-}
-
-.field select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23555350'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 12px center;
-  padding-right:32px;
-}
-
+.field label{display:block;font-size:0.68rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px;}
+.field select,.field input{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Syne',sans-serif;font-size:0.9rem;padding:11px 12px;-webkit-appearance:none;appearance:none;transition:border-color 0.15s;}
+.field select:focus,.field input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 2px rgba(245,96,26,0.15);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23555350'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
 .field input::placeholder{color:var(--text3);}
-
-.form-footer{
-  padding:16px;flex-shrink:0;
-  border-top:1px solid var(--border);
-  background:var(--s1);
-}
-
-.btn-submit{
-  width:100%;padding:16px;
-  background:var(--orange);
-  border:none;border-radius:12px;
-  color:white;font-family:'Syne',sans-serif;
-  font-size:1rem;font-weight:800;
-  letter-spacing:0.02em;cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 4px 20px rgba(245,96,26,0.3);
-}
-
+.form-footer{padding:16px;flex-shrink:0;border-top:1px solid var(--border);background:var(--s1);}
+.btn-submit{width:100%;padding:16px;background:var(--orange);border:none;border-radius:12px;color:white;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:0.02em;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(245,96,26,0.3);}
 .btn-submit:hover{background:var(--orange2);transform:translateY(-1px);box-shadow:0 8px 28px rgba(245,96,26,0.4);}
 .btn-submit:active{transform:translateY(0);}
 .btn-submit:disabled{background:var(--s2);color:var(--text3);box-shadow:none;cursor:not-allowed;transform:none;}
-
-/* SUCCESS STATE */
-.success-overlay{
-  display:none;
-  position:fixed;inset:0;
-  background:rgba(14,15,18,0.95);
-  z-index:100;
-  align-items:center;justify-content:center;
-  flex-direction:column;gap:16px;
-  text-align:center;padding:32px;
-}
-
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(14,15,18,0.95);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:32px;}
 .success-overlay.show{display:flex;}
-
-.success-icon{
-  width:72px;height:72px;
-  background:rgba(30,215,96,0.15);
-  border:2px solid var(--green);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:2rem;
-  animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-}
-
+.success-icon{width:72px;height:72px;background:rgba(30,215,96,0.15);border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);}
 @keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
-
 .success-title{font-size:1.3rem;font-weight:800;color:var(--green);}
 .success-sub{font-size:0.82rem;color:var(--text2);}
-.success-detail{
-  background:var(--s1);border:1px solid var(--border2);
-  border-radius:10px;padding:14px 20px;
-  font-family:'Syne Mono',monospace;font-size:0.75rem;
-  color:var(--text2);line-height:1.8;text-align:left;
-  max-width:320px;width:100%;
-}
+.success-detail{background:var(--s1);border:1px solid var(--border2);border-radius:10px;padding:14px 20px;font-family:'Syne Mono',monospace;font-size:0.75rem;color:var(--text2);line-height:1.8;text-align:left;max-width:320px;width:100%;}
 .success-detail strong{color:var(--orange);}
-
-.btn-new{
-  margin-top:8px;padding:14px 32px;
-  background:var(--s2);border:1px solid var(--border2);
-  border-radius:10px;color:var(--text);
-  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;
-  cursor:pointer;transition:all 0.15s;
-}
+.btn-new{margin-top:8px;padding:14px 32px;background:var(--s2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.15s;}
 .btn-new:hover{border-color:var(--orange);color:var(--orange);}
-
-/* ── OPS SCREEN ── */
-#ops{
-  background:var(--bg);
-}
-
-.ops-body{
-  flex:1;display:flex;overflow:hidden;
-}
-
-/* LEFT: viajes activos */
-.ops-left{
-  width:380px;flex-shrink:0;
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-
-.ops-left-header{
-  padding:12px 14px;
-  background:var(--s1);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-
-.olh-title{
-  font-family:'Syne Mono',monospace;
-  font-size:0.62rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.1em;
-  color:var(--text3);
-}
+#ops{background:var(--bg);}
+.ops-body{flex:1;display:flex;overflow:hidden;}
+.ops-left{width:380px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.ops-left-header{padding:12px 14px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.olh-title{font-family:'Syne Mono',monospace;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);}
 .olh-title span{color:var(--orange);}
-
-.live-badge{
-  display:flex;align-items:center;gap:5px;
-  font-family:'Syne Mono',monospace;font-size:0.58rem;
-  color:var(--green);
-  background:rgba(30,215,96,0.08);
-  border:1px solid rgba(30,215,96,0.15);
-  padding:2px 8px;border-radius:20px;
-}
-
-.live-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:var(--green);
-  animation:pulse 1.5s infinite;
-}
-
+.live-badge{display:flex;align-items:center;gap:5px;font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--green);background:rgba(30,215,96,0.08);border:1px solid rgba(30,215,96,0.15);padding:2px 8px;border-radius:20px;}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-
-.trips-list{
-  flex:1;overflow-y:auto;
-}
-
-.trip-card{
-  padding:12px 14px;
-  border-bottom:1px solid var(--border);
-  cursor:pointer;
-  transition:background 0.1s;
-  position:relative;
-}
-
+.trips-list{flex:1;overflow-y:auto;}
+.trip-card{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;position:relative;}
 .trip-card:hover{background:rgba(245,96,26,0.04);}
 .trip-card.selected{background:rgba(245,96,26,0.06);border-left:2px solid var(--orange);}
-
-.tc-top{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:6px;
-}
-
-.tc-patente{
-  font-family:'Syne Mono',monospace;
-  font-size:0.82rem;font-weight:600;color:var(--orange);
-}
-
-.tc-hora{
-  font-family:'Syne Mono',monospace;
-  font-size:0.6rem;color:var(--text3);
-}
-
-.tc-conductor{
-  font-size:0.78rem;font-weight:600;color:var(--text);
-  margin-bottom:4px;
-}
-
-.tc-ruta{
-  font-size:0.72rem;color:var(--text2);
-  display:flex;align-items:center;gap:6px;
-  margin-bottom:5px;
-}
-
+.tc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.tc-patente{font-family:'Syne Mono',monospace;font-size:0.82rem;font-weight:600;color:var(--orange);}
+.tc-hora{font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);}
+.tc-conductor{font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:4px;}
+.tc-ruta{font-size:0.72rem;color:var(--text2);display:flex;align-items:center;gap:6px;margin-bottom:5px;}
 .tc-ruta .arrow{color:var(--text3);}
-
 .tc-tags{display:flex;gap:5px;flex-wrap:wrap;}
-
-.tc-tag{
-  display:inline-flex;padding:2px 7px;
-  border-radius:4px;font-size:0.6rem;font-weight:700;
-  font-family:'Syne Mono',monospace;
-}
-
+.tc-tag{display:inline-flex;padding:2px 7px;border-radius:4px;font-size:0.6rem;font-weight:700;font-family:'Syne Mono',monospace;}
 .tc-tag.carga{background:rgba(245,96,26,0.1);color:var(--orange2);}
 .tc-tag.cliente{background:rgba(58,143,240,0.1);color:var(--blue);}
 .tc-tag.intl{background:rgba(144,96,240,0.1);color:var(--purple);}
 .tc-tag.nac{background:rgba(30,215,96,0.08);color:var(--green);}
-
-/* estado badges */
-.estado-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:3px 9px;border-radius:20px;
-  font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:700;
-  letter-spacing:0.04em;
-}
+.estado-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.04em;}
 .estado-badge.en-ruta{background:rgba(30,215,96,0.1);color:var(--green);border:1px solid rgba(30,215,96,0.2);}
 .estado-badge.cargando{background:rgba(245,96,26,0.1);color:var(--orange);border:1px solid rgba(245,96,26,0.2);}
 .estado-badge.a-destino{background:rgba(58,143,240,0.1);color:var(--blue);border:1px solid rgba(58,143,240,0.2);}
 .estado-badge.por-confirmar{background:rgba(240,176,32,0.1);color:var(--yellow);border:1px solid rgba(240,176,32,0.2);}
 .estado-badge.terminado{background:rgba(80,80,80,0.15);color:var(--text3);border:1px solid rgba(80,80,80,0.2);}
-
-/* estado dot */
 .edo{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
 .edo.en-ruta{background:var(--green);}
 .edo.cargando{background:var(--orange);animation:pulse 1.5s infinite;}
 .edo.a-destino{background:var(--blue);}
 .edo.por-confirmar{background:var(--yellow);animation:pulse 1.5s infinite;}
 .edo.terminado{background:var(--text3);}
-
-/* trip card actions */
-.tc-actions{
-  display:none;
-  margin-top:10px;
-  padding-top:10px;
-  border-top:1px solid var(--border);
-  gap:6px;
-  flex-wrap:wrap;
-}
-
+.tc-actions{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);gap:6px;flex-wrap:wrap;}
 .trip-card.selected .tc-actions{display:flex;}
-
-.tc-action-btn{
-  flex:1;min-width:0;
-  padding:6px 8px;
-  border-radius:7px;
-  border:1px solid var(--border2);
-  background:var(--s2);
-  color:var(--text2);
-  font-family:'Syne Mono',monospace;
-  font-size:0.58rem;font-weight:600;
-  cursor:pointer;text-align:center;
-  transition:all 0.15s;
-  white-space:nowrap;
-}
-
+.tc-action-btn{flex:1;min-width:0;padding:6px 8px;border-radius:7px;border:1px solid var(--border2);background:var(--s2);color:var(--text2);font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s;white-space:nowrap;}
 .tc-action-btn:hover{border-color:var(--orange);color:var(--orange);}
-.tc-action-btn.active{background:rgba(30,215,96,0.08);border-color:rgba(30,215,96,0.3);color:var(--green);}
 .tc-action-btn.del{color:var(--red);}
 .tc-action-btn.del:hover{border-color:var(--red);background:rgba(240,48,48,0.06);}
-
-/* estado selector row */
-.estado-selector{
-  display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;
-}
-
-.est-btn{
-  padding:4px 10px;border-radius:6px;
-  border:1px solid var(--border2);background:var(--s2);
-  color:var(--text3);font-family:'Syne Mono',monospace;
-  font-size:0.58rem;font-weight:700;cursor:pointer;
-  transition:all 0.15s;
-}
-
+.estado-selector{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.est-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--s2);color:var(--text3);font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:700;cursor:pointer;transition:all 0.15s;}
 .est-btn:hover{border-color:var(--text2);color:var(--text2);}
 .est-btn.sel-en-ruta{background:rgba(30,215,96,0.1);border-color:rgba(30,215,96,0.3);color:var(--green);}
 .est-btn.sel-cargando{background:rgba(245,96,26,0.1);border-color:rgba(245,96,26,0.3);color:var(--orange);}
 .est-btn.sel-a-destino{background:rgba(58,143,240,0.1);border-color:rgba(58,143,240,0.3);color:var(--blue);}
 .est-btn.sel-por-confirmar{background:rgba(240,176,32,0.1);border-color:rgba(240,176,32,0.3);color:var(--yellow);}
 .est-btn.sel-terminado{background:rgba(80,80,80,0.1);border-color:rgba(80,80,80,0.3);color:var(--text3);}
-
-/* empty state */
-.empty-state{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:10px;padding:32px;text-align:center;
-}
-
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:32px;text-align:center;}
 .empty-icon{font-size:2.5rem;opacity:0.3;}
 .empty-title{font-size:0.88rem;font-weight:700;color:var(--text2);}
 .empty-sub{font-size:0.72rem;color:var(--text3);}
-
-/* add trip btn */
-.add-trip-btn{
-  margin:12px 14px;padding:11px;
-  background:rgba(245,96,26,0.08);
-  border:1px dashed rgba(245,96,26,0.3);
-  border-radius:10px;
-  color:var(--orange);font-family:'Syne',sans-serif;
-  font-size:0.8rem;font-weight:700;
-  cursor:pointer;text-align:center;
-  transition:all 0.15s;flex-shrink:0;
-}
+.add-trip-btn{margin:12px 14px;padding:11px;background:rgba(245,96,26,0.08);border:1px dashed rgba(245,96,26,0.3);border-radius:10px;color:var(--orange);font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;text-align:center;transition:all 0.15s;flex-shrink:0;}
 .add-trip-btn:hover{background:rgba(245,96,26,0.12);border-color:var(--orange);}
-
-/* RIGHT: GPS */
-.ops-right{
-  flex:1;display:flex;flex-direction:column;
-  overflow:hidden;position:relative;
-}
-
-.gps-bar{
-  height:38px;
-  background:var(--s1);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 14px;flex-shrink:0;
-}
-
-.gps-bar-title{
-  font-family:'Syne Mono',monospace;
-  font-size:0.6rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.1em;
-  color:var(--text3);
-}
+.ops-right{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+.gps-bar{height:38px;background:var(--s1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 14px;flex-shrink:0;}
+.gps-bar-title{font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);}
 .gps-bar-title span{color:var(--green);}
-
-.gps-frame{
-  flex:1;
-  background:#0a0c10;
-  position:relative;
-  overflow:hidden;
-}
-
-/* Wialon embed placeholder */
-.wialon-placeholder{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:14px;text-align:center;padding:32px;
-}
-
-.wp-icon{font-size:3rem;opacity:0.15;}
-
-.wp-title{
-  font-size:1rem;font-weight:800;color:var(--text2);
-}
-
-.wp-desc{font-size:0.78rem;color:var(--text3);line-height:1.6;max-width:360px;}
-
-.wp-code{
-  background:var(--s1);border:1px solid var(--border2);
-  border-radius:8px;padding:12px 16px;
-  font-family:'Syne Mono',monospace;font-size:0.7rem;
-  color:var(--orange);text-align:left;
-  max-width:420px;width:100%;line-height:1.8;
-}
-
-.wp-steps{
-  background:var(--s1);border:1px solid var(--border2);
-  border-radius:10px;padding:16px 20px;
-  max-width:420px;width:100%;text-align:left;
-}
-
-.wp-step{
-  display:flex;gap:10px;font-size:0.75rem;
-  color:var(--text2);margin-bottom:10px;line-height:1.5;
-}
-.wp-step:last-child{margin-bottom:0;}
-
-.wp-step-n{
-  width:20px;height:20px;border-radius:50%;
-  background:var(--orange);color:white;
-  font-size:0.6rem;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:1px;
-}
-
-/* STATUS BAR */
-.status-bar{
-  height:28px;background:var(--s1);
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;gap:14px;
-  padding:0 14px;flex-shrink:0;
-  font-family:'Syne Mono',monospace;
-  font-size:0.58rem;color:var(--text3);
-}
-
+.gps-frame{flex:1;background:#0a0c10;position:relative;overflow:hidden;}
+.status-bar{height:28px;background:var(--s1);border-top:1px solid var(--border);display:flex;align-items:center;gap:14px;padding:0 14px;flex-shrink:0;font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--text3);}
 .sb-dot{width:5px;height:5px;border-radius:50%;}
 .sb-dot.g{background:var(--green);}
 .sb-dot.r{background:var(--red);animation:pulse 1.5s infinite;}
 .sb-dot.o{background:var(--orange);}
-
 .sb-item{display:flex;align-items:center;gap:5px;}
 .sb-right{margin-left:auto;color:var(--text3);}
-
-/* scrollbar */
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-
-/* ── TERMINAR MODAL ── */
-.modal-overlay{
-  display:none;position:fixed;inset:0;z-index:200;
-  background:rgba(8,9,12,0.92);
-  align-items:flex-end;justify-content:center;
-  padding:0;
-}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(8,9,12,0.92);align-items:flex-end;justify-content:center;padding:0;}
 .modal-overlay.show{display:flex;}
-
-.modal{
-  background:var(--s1);border:1px solid var(--border2);
-  border-radius:20px 20px 0 0;
-  width:100%;max-width:520px;
-  padding:0;
-  animation:slideUp 0.25s cubic-bezier(0.34,1.2,0.64,1);
-  max-height:90vh;display:flex;flex-direction:column;
-}
-
+.modal{background:var(--s1);border:1px solid var(--border2);border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:0;animation:slideUp 0.25s cubic-bezier(0.34,1.2,0.64,1);max-height:90vh;display:flex;flex-direction:column;}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
-
-.modal-handle{
-  width:36px;height:4px;border-radius:2px;
-  background:var(--border2);margin:12px auto 0;flex-shrink:0;
-}
-
-.modal-header{
-  padding:16px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;
-}
-
-.modal-title{
-  font-size:1rem;font-weight:800;margin-bottom:3px;
-}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border2);margin:12px auto 0;flex-shrink:0;}
+.modal-header{padding:16px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.modal-title{font-size:1rem;font-weight:800;margin-bottom:3px;}
 .modal-title span{color:var(--green);}
 .modal-sub{font-size:0.75rem;color:var(--text3);}
 .modal-sub strong{color:var(--orange);}
-
 .modal-body{overflow-y:auto;padding:14px 20px;flex:1;}
-
 .modal-field{margin-bottom:14px;}
-.modal-field label{
-  display:block;font-size:0.65rem;font-weight:700;
-  color:var(--text3);text-transform:uppercase;
-  letter-spacing:0.07em;margin-bottom:6px;
-}
-
-.modal-field input,
-.modal-field select{
-  width:100%;background:var(--s2);
-  border:1px solid var(--border2);border-radius:8px;
-  color:var(--text);font-family:'Syne',sans-serif;
-  font-size:0.9rem;padding:10px 12px;
-  -webkit-appearance:none;appearance:none;
-  transition:border-color 0.15s;
-}
-
-.modal-field input:focus,
-.modal-field select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 2px rgba(30,215,96,0.1);}
-
-.modal-field select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23555350'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;
-}
-
+.modal-field label{display:block;font-size:0.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;}
+.modal-field input,.modal-field select{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Syne',sans-serif;font-size:0.9rem;padding:10px 12px;-webkit-appearance:none;appearance:none;transition:border-color 0.15s;}
+.modal-field input:focus,.modal-field select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 2px rgba(30,215,96,0.1);}
+.modal-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23555350'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
 .modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-
-.modal-footer{
-  padding:14px 20px 20px;border-top:1px solid var(--border);flex-shrink:0;
-  display:flex;gap:10px;
-}
-
-.btn-cancel{
-  flex:1;padding:13px;border-radius:10px;
-  background:var(--s2);border:1px solid var(--border2);
-  color:var(--text2);font-family:'Syne',sans-serif;
-  font-size:0.88rem;font-weight:700;cursor:pointer;
-  transition:all 0.15s;
-}
+.modal-footer{padding:14px 20px 20px;border-top:1px solid var(--border);flex-shrink:0;display:flex;gap:10px;}
+.btn-cancel{flex:1;padding:13px;border-radius:10px;background:var(--s2);border:1px solid var(--border2);color:var(--text2);font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.15s;}
 .btn-cancel:hover{border-color:var(--text3);}
-
-.btn-confirm{
-  flex:2;padding:13px;border-radius:10px;
-  background:var(--green);border:none;
-  color:#0a1a0f;font-family:'Syne',sans-serif;
-  font-size:0.88rem;font-weight:800;cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 4px 16px rgba(30,215,96,0.25);
-}
+.btn-confirm{flex:2;padding:13px;border-radius:10px;background:var(--green);border:none;color:#0a1a0f;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(30,215,96,0.25);}
 .btn-confirm:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(30,215,96,0.35);}
 .btn-confirm:disabled{background:var(--s2);color:var(--text3);box-shadow:none;transform:none;cursor:not-allowed;}
-
-/* saving state */
-.saving-msg{
-  display:none;text-align:center;padding:8px;
-  font-size:0.75rem;color:var(--text3);
-  font-family:'Syne Mono',monospace;
-}
+.saving-msg{display:none;text-align:center;padding:8px;font-size:0.75rem;color:var(--text3);font-family:'Syne Mono',monospace;}
 .saving-msg.show{display:block;}
-
-/* sheets success */
-.sheets-ok{
-  display:none;
-  background:rgba(30,215,96,0.08);border:1px solid rgba(30,215,96,0.2);
-  border-radius:10px;padding:12px 14px;margin-top:10px;
-  font-size:0.78rem;color:var(--green);text-align:center;
-  font-family:'Syne Mono',monospace;
-}
+.sheets-ok{display:none;background:rgba(30,215,96,0.08);border:1px solid rgba(30,215,96,0.2);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:var(--green);text-align:center;font-family:'Syne Mono',monospace;}
 .sheets-ok.show{display:block;}
-
-/* config notice */
-.config-notice{
-  background:rgba(240,176,32,0.06);border:1px solid rgba(240,176,32,0.15);
-  border-radius:8px;padding:10px 12px;margin-bottom:14px;
-  font-size:0.72rem;color:var(--yellow);line-height:1.5;
-}
+.config-notice{background:rgba(240,176,32,0.06);border:1px solid rgba(240,176,32,0.15);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:0.72rem;color:var(--yellow);line-height:1.5;}
 .config-notice a{color:var(--orange);text-decoration:underline;cursor:pointer;}
-
-/* mobile adjustments */
-@media(max-width:640px){
-  .ops-left{width:100%;}
-  .ops-right{display:none;}
-  .ops-left.hide{display:none;}
-  .ops-right.show{display:flex;position:fixed;inset:50px 0 28px 0;}
-  .home-title{font-size:1.6rem;}
-}
+#admin{background:var(--bg);}
+.admin-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px;}
+.admin-section{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.admin-section-header{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.ash-title{font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);}
+.ash-title span{color:var(--purple);}
+.ash-count{font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--text3);background:var(--bg);padding:2px 8px;border-radius:10px;}
+.admin-list{padding:8px 14px;display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;}
+.admin-item{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--s2);border:1px solid var(--border);border-radius:7px;font-size:0.8rem;font-family:'Syne Mono',monospace;color:var(--text);}
+.admin-item.default{opacity:0.5;}
+.admin-item-del{background:none;border:none;color:var(--text3);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:0.75rem;transition:all 0.15s;}
+.admin-item-del:hover{color:var(--red);background:rgba(240,48,48,0.08);}
+.admin-add-row{padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.admin-add-input{flex:1;background:var(--s2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Syne',sans-serif;font-size:0.85rem;padding:9px 12px;transition:border-color 0.15s;}
+.admin-add-input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 2px rgba(144,96,240,0.1);}
+.admin-add-input::placeholder{color:var(--text3);}
+.admin-add-btn{padding:9px 16px;background:rgba(144,96,240,0.15);border:1px solid rgba(144,96,240,0.3);border-radius:8px;color:var(--purple);font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.admin-add-btn:hover{background:rgba(144,96,240,0.25);border-color:var(--purple);}
+.admin-notice{padding:10px 14px;font-size:0.72rem;color:var(--text3);border-top:1px solid var(--border);font-family:'Syne Mono',monospace;}
+.admin-notice span{color:var(--text2);}
+@media(max-width:640px){.ops-left{width:100%;}.ops-right{display:none;}.ops-left.hide{display:none;}.ops-right.show{display:flex;position:fixed;inset:50px 0 28px 0;}.home-title{font-size:1.6rem;}}
 </style>
 </head>
 <body>
-
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div class="screen active" id="home">
-  <div class="home-inner">
-    <div class="home-logo">
-      <div class="logo-mark">POLA</div>
-    </div>
-    <h1 class="home-title">Transportes<br><span>Pola</span></h1>
-    <p class="home-sub">Sistema de operaciones · ¿Quién sos?</p>
-
-    <div class="role-cards">
-      <div class="role-card" onclick="goTo('dispatch')">
-        <div class="role-icon dispatch">📋</div>
-        <div class="role-text">
-          <div class="role-name">Catalina — Despacho</div>
-          <div class="role-desc">Registrar salida de camión</div>
-        </div>
-      </div>
-      <div class="role-card" onclick="goTo('ops')">
-        <div class="role-icon ops">🖥️</div>
-        <div class="role-text">
-          <div class="role-name">Joaquín — Operaciones</div>
-          <div class="role-desc">Ver viajes activos + GPS en vivo</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="home-inner">
+<div class="home-logo"><div class="logo-mark">POLA</div></div>
+<h1 class="home-title">Transportes<br><span>Pola</span></h1>
+<p class="home-sub">Sistema de operaciones · ¿Quién sos?</p>
+<div class="role-cards">
+<div class="role-card" onclick="goTo('dispatch')"><div class="role-icon dispatch">📋</div><div class="role-text"><div class="role-name">Catalina — Despacho</div><div class="role-desc">Registrar salida de camión</div></div></div>
+<div class="role-card" onclick="goTo('ops')"><div class="role-icon ops">🖥️</div><div class="role-text"><div class="role-name">Joaquín — Operaciones</div><div class="role-desc">Ver viajes activos + GPS en vivo</div></div></div>
+<div class="role-card" onclick="goTo('admin')"><div class="role-icon admin">⚙️</div><div class="role-text"><div class="role-name">Administrar listas</div><div class="role-desc">Conductores, patentes, clientes, productos</div></div></div>
+</div>
+</div>
 </div>
 
-<!-- ══ DISPATCH ══ -->
+<!-- DISPATCH -->
 <div class="screen" id="dispatch">
-
-  <div class="topbar">
-    <div class="tb-left">
-      <div class="tb-logo">POLA</div>
-      <div class="tb-title">Despacho de <strong>viaje</strong></div>
-    </div>
-    <div class="tb-back" onclick="goTo('home')">← Volver</div>
-  </div>
-
-  <div class="form-body">
-
-    <div class="form-section">
-      <div class="fs-header"><span>01</span> · Equipo</div>
-      <div class="field">
-        <label>Patente tracto</label>
-        <select id="f-tracto">
-          <option value="">Seleccionar tracto...</option>
-          <option>DBCY-48</option><option>DJZD-92</option><option>DPJR-64</option>
-          <option>DRKG-75</option><option>GSVC-91</option><option>GSVC-92</option>
-          <option>JTVH-78</option><option>LKVW-35</option><option>LLXF-38</option>
-          <option>PLZR-34</option><option>PSXG-52</option><option>PYCF-69</option>
-          <option>SJJW-71</option><option>SJJW-83</option><option>SJJX-22</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Semirremolque</label>
-        <select id="f-semi">
-          <option value="">Seleccionar semi...</option>
-          <option>GRGF-13</option><option>HXGF-55</option><option>HXGX-47</option>
-          <option>JA-7004</option><option>JD-1915</option><option>JD-4036</option>
-          <option>JF-3789</option><option>JF-3937</option><option>JG-4452</option>
-          <option>JG-5913</option><option>JJ-2101</option><option>JL-3012</option>
-          <option>JN-1478</option><option>JN-1494</option><option>KDJL-85</option>
-          <option>KYLH-96</option><option>KYRS-72</option><option>PXHW-31</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Conductor</label>
-        <select id="f-conductor">
-          <option value="">Seleccionar conductor...</option>
-          <option>ALEJANDRO BARRA</option><option>ALEX ACUÑA</option>
-          <option>BALTAZAR CHAPERON</option><option>CAMILO MUÑOZ</option>
-          <option>JOSE JARA</option><option>JOSE MARTINEZ</option>
-          <option>JUAN NAVARRO</option><option>LEONEL CAYUMAN</option>
-          <option>LUIS GONZALEZ</option><option>NELSON MUÑOZ</option>
-          <option>OSCAR CARTER</option><option>RENE LANDEROS</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <div class="fs-header"><span>02</span> · Carga</div>
-      <div class="field">
-        <label>Cliente</label>
-        <select id="f-cliente">
-          <option value="">Seleccionar cliente...</option>
-          <option>VDA</option><option>ESMAX</option><option>ENFLEX</option>
-          <option>NEW ANDES CHEMICALS</option><option>ENEX</option>
-          <option>QUIMICA LATINOAMERICANA</option><option>LOGINET</option>
-          <option>VOLCAN</option><option>COVAEM</option><option>COAGRA</option>
-          <option>PACIFICO SUR</option><option>BULLCOM</option><option>DIDEVAL</option>
-          <option>BITUMIX</option><option>RENO</option><option>LUVAL</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Producto / carga</label>
-        <select id="f-producto">
-          <option value="">Seleccionar producto...</option>
-          <option>DIESEL</option><option>GASOLINA 93</option><option>GASOLINA 95</option>
-          <option>GASOLINA 97</option><option>JET</option><option>ALCOHOL</option>
-          <option>VINO</option><option>PISCO</option><option>AGUARRAS</option>
-          <option>SOLVENTE B</option><option>AROMATICO PESADO</option><option>BUTIL GLICOL</option>
-          <option>EMULSION ASFALTICA</option><option>ASFALTO</option>
-          <option>ACIDO SULFURICO</option><option>NAFTA</option>
-          <option>MEZCLA HIDROCARBUROS</option><option>COVESOL</option>
-          <option>AXXSOL 30</option><option>INTERFASES</option>
-          <option>COLPA CHANCADA</option><option>VOLCANITA</option>
-          <option>FRUTA</option><option>CONTENEDOR</option><option>VACIO</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <div class="fs-header"><span>03</span> · Ruta</div>
-      <div class="field">
-        <label>Origen</label>
-        <input type="text" id="f-origen" placeholder="Ciudad o planta de carga...">
-      </div>
-      <div class="field">
-        <label>Destino</label>
-        <input type="text" id="f-destino" placeholder="Ciudad o planta de descarga...">
-      </div>
-      <div class="field">
-        <label>¿Operación internacional?</label>
-        <select id="f-intl">
-          <option value="NO">No — solo Chile</option>
-          <option value="SI">Sí — Chile / Argentina</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <div class="fs-header"><span>04</span> · Detalle (opcional)</div>
-      <div class="field">
-        <label>Observaciones</label>
-        <input type="text" id="f-obs" placeholder="Notas, guía, instrucciones...">
-      </div>
-    </div>
-
-  </div>
-
-  <div class="form-footer">
-    <button class="btn-submit" id="submitBtn" onclick="submitTrip()">
-      Registrar salida del camión
-    </button>
-  </div>
-
-  <!-- SUCCESS -->
-  <div class="success-overlay" id="successOverlay">
-    <div class="success-icon">✓</div>
-    <div class="success-title">Viaje registrado</div>
-    <div class="success-sub" id="successTime"></div>
-    <div class="success-detail" id="successDetail"></div>
-    <button class="btn-new" onclick="resetForm()">Registrar otro viaje</button>
-  </div>
-
+<div class="topbar"><div class="tb-left"><div class="tb-logo">POLA</div><div class="tb-title">Despacho de <strong>viaje</strong></div></div><div class="tb-back" onclick="goTo('home')">← Volver</div></div>
+<div class="form-body">
+<div class="form-section">
+<div class="fs-header"><span>01</span> · Equipo</div>
+<div class="field"><label>Patente tracto</label><select id="f-tracto"></select></div>
+<div class="field"><label>Semirremolque</label><select id="f-semi"></select></div>
+<div class="field"><label>Conductor</label><select id="f-conductor"></select></div>
+</div>
+<div class="form-section">
+<div class="fs-header"><span>02</span> · Carga</div>
+<div class="field"><label>Cliente</label><select id="f-cliente"></select></div>
+<div class="field"><label>Producto / carga</label><select id="f-producto"></select></div>
+</div>
+<div class="form-section">
+<div class="fs-header"><span>03</span> · Ruta</div>
+<div class="field"><label>Origen</label><input type="text" id="f-origen" placeholder="Ciudad o planta de carga..."></div>
+<div class="field"><label>Destino</label><input type="text" id="f-destino" placeholder="Ciudad o planta de descarga..."></div>
+<div class="field"><label>¿Operación internacional?</label><select id="f-intl"><option value="NO">No — solo Chile</option><option value="SI">Sí — Chile / Argentina</option></select></div>
+</div>
+<div class="form-section">
+<div class="fs-header"><span>04</span> · Detalle (opcional)</div>
+<div class="field"><label>Observaciones</label><input type="text" id="f-obs" placeholder="Notas, guía, instrucciones..."></div>
+</div>
+</div>
+<div class="form-footer"><button class="btn-submit" id="submitBtn" onclick="submitTrip()">Registrar salida del camión</button></div>
+<div class="success-overlay" id="successOverlay">
+<div class="success-icon">✓</div>
+<div class="success-title">Viaje registrado</div>
+<div class="success-sub" id="successTime"></div>
+<div class="success-detail" id="successDetail"></div>
+<button class="btn-new" onclick="resetForm()">Registrar otro viaje</button>
+</div>
 </div>
 
-<!-- ══ OPS ══ -->
+<!-- OPS -->
 <div class="screen" id="ops">
-
-  <div class="topbar">
-    <div class="tb-left">
-      <div class="tb-logo">POLA</div>
-      <div class="tb-title"><strong>Operaciones</strong> en vivo</div>
-    </div>
-    <div class="tb-back" onclick="goTo('home')">← Inicio</div>
-  </div>
-
-  <div class="ops-body">
-
-    <!-- LEFT: VIAJES -->
-    <div class="ops-left" id="opsList">
-
-      <div class="ops-left-header">
-        <div class="olh-title">Viajes activos · <span id="tripCount">0</span></div>
-        <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
-      </div>
-
-      <div class="trips-list" id="tripsList">
-        <div class="empty-state" id="emptyState">
-          <div class="empty-icon">🚛</div>
-          <div class="empty-title">Sin viajes registrados hoy</div>
-          <div class="empty-sub">Catalina registra la salida de cada camión y aparece acá al instante</div>
-        </div>
-      </div>
-
-      <div class="add-trip-btn" onclick="goTo('dispatch')">
-        + Registrar salida manual
-      </div>
-
-    </div>
-
-    <!-- RIGHT: GPS -->
-    <div class="ops-right">
-
-      <div class="gps-bar">
-        <div class="gps-bar-title">GPS · <span>Wialon en vivo</span></div>
-        <div style="font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--text3);">
-          16 unidades
-        </div>
-      </div>
-
-      <div class="gps-frame">
-        <iframe
-          src="https://orvis.gpschile.com/locator/index.html?t=5a588ea758d66556c764a52768e96eea4072A60ABE7853A946833DB4F3EBE5D005CCCD41"
-          width="100%"
-          height="100%"
-          frameborder="0"
-          allowfullscreen
-          style="display:block;border:none;">
-        </iframe>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="status-bar">
-    <div class="sb-item"><div class="sb-dot g"></div><span id="sbActive">0 en ruta</span></div>
-    <div class="sb-item"><div class="sb-dot o"></div><span id="sbToday">0 viajes hoy</span></div>
-    <div class="sb-right" id="sbTime"></div>
-  </div>
-
+<div class="topbar"><div class="tb-left"><div class="tb-logo">POLA</div><div class="tb-title"><strong>Operaciones</strong> en vivo</div></div><div class="tb-back" onclick="goTo('home')">← Inicio</div></div>
+<div class="ops-body">
+<div class="ops-left" id="opsList">
+<div class="ops-left-header"><div class="olh-title">Viajes activos · <span id="tripCount">0</span></div><div class="live-badge"><div class="live-dot"></div>EN VIVO</div></div>
+<div class="trips-list" id="tripsList">
+<div class="empty-state" id="emptyState"><div class="empty-icon">🚛</div><div class="empty-title">Sin viajes registrados hoy</div><div class="empty-sub">Catalina registra la salida de cada camión y aparece acá al instante</div></div>
+</div>
+<div class="add-trip-btn" onclick="goTo('dispatch')">+ Registrar salida manual</div>
+</div>
+<div class="ops-right">
+<div class="gps-bar"><div class="gps-bar-title">GPS · <span>Wialon en vivo</span></div><div style="font-family:'Syne Mono',monospace;font-size:0.58rem;color:var(--text3);">16 unidades</div></div>
+<div class="gps-frame"><iframe src="https://orvis.gpschile.com/locator/index.html?t=5a588ea758d66556c764a52768e96eea4072A60ABE7853A946833DB4F3EBE5D005CCCD41" width="100%" height="100%" frameborder="0" allowfullscreen style="display:block;border:none;"></iframe></div>
+</div>
+</div>
+<div class="status-bar">
+<div class="sb-item"><div class="sb-dot g"></div><span id="sbActive">0 en ruta</span></div>
+<div class="sb-item"><div class="sb-dot o"></div><span id="sbToday">0 viajes hoy</span></div>
+<div class="sb-right" id="sbTime"></div>
+</div>
 </div>
 
-<!-- ── TERMINAR MODAL ── -->
+<!-- ADMIN -->
+<div class="screen" id="admin">
+<div class="topbar"><div class="tb-left"><div class="tb-logo">POLA</div><div class="tb-title">Administrar <strong>listas</strong></div></div><div class="tb-back" onclick="goTo('home')">← Inicio</div></div>
+<div class="admin-body">
+<div class="admin-section">
+<div class="admin-section-header"><div class="ash-title"><span>Tractos</span> · Patentes tracto</div><div class="ash-count" id="count-tractos">0</div></div>
+<div class="admin-list" id="list-tractos"></div>
+<div class="admin-add-row"><input class="admin-add-input" id="input-tractos" placeholder="Ej: ABCD-12" onkeydown="if(event.key==='Enter')addItem('tractos')"><button class="admin-add-btn" onclick="addItem('tractos')">+ Agregar</button></div>
+<div class="admin-notice">Items en gris son base del sistema. <span>Los que agregues se guardan en este dispositivo.</span></div>
+</div>
+<div class="admin-section">
+<div class="admin-section-header"><div class="ash-title"><span>Semirremolques</span></div><div class="ash-count" id="count-semis">0</div></div>
+<div class="admin-list" id="list-semis"></div>
+<div class="admin-add-row"><input class="admin-add-input" id="input-semis" placeholder="Ej: JD-1234" onkeydown="if(event.key==='Enter')addItem('semis')"><button class="admin-add-btn" onclick="addItem('semis')">+ Agregar</button></div>
+</div>
+<div class="admin-section">
+<div class="admin-section-header"><div class="ash-title"><span>Conductores</span></div><div class="ash-count" id="count-conductores">0</div></div>
+<div class="admin-list" id="list-conductores"></div>
+<div class="admin-add-row"><input class="admin-add-input" id="input-conductores" placeholder="Ej: PEDRO GOMEZ" onkeydown="if(event.key==='Enter')addItem('conductores')"><button class="admin-add-btn" onclick="addItem('conductores')">+ Agregar</button></div>
+</div>
+<div class="admin-section">
+<div class="admin-section-header"><div class="ash-title"><span>Clientes</span></div><div class="ash-count" id="count-clientes">0</div></div>
+<div class="admin-list" id="list-clientes"></div>
+<div class="admin-add-row"><input class="admin-add-input" id="input-clientes" placeholder="Ej: NUEVA EMPRESA SA" onkeydown="if(event.key==='Enter')addItem('clientes')"><button class="admin-add-btn" onclick="addItem('clientes')">+ Agregar</button></div>
+</div>
+<div class="admin-section">
+<div class="admin-section-header"><div class="ash-title"><span>Productos</span> · Cargas</div><div class="ash-count" id="count-productos">0</div></div>
+<div class="admin-list" id="list-productos"></div>
+<div class="admin-add-row"><input class="admin-add-input" id="input-productos" placeholder="Ej: ACEITE VEGETAL" onkeydown="if(event.key==='Enter')addItem('productos')"><button class="admin-add-btn" onclick="addItem('productos')">+ Agregar</button></div>
+</div>
+</div>
+</div>
+<!-- TERMINAR MODAL -->
 <div class="modal-overlay" id="terminarModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title">Confirmar cierre · <span>Viaje terminado</span></div>
-      <div class="modal-sub">Completá los datos de <strong id="mTripLabel">—</strong> para guardar en la planilla</div>
-    </div>
-    <div class="modal-body">
-
-      <div class="config-notice" id="configNotice" style="display:none;">
-        ⚠ Aún no configuraste el link de Google Sheets. Los datos se guardarán localmente.
-        <br><a onclick="showSetup()">Ver instrucciones de configuración →</a>
-      </div>
-
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Fecha de carga</label>
-          <input type="date" id="m-fechaCarga">
-        </div>
-        <div class="modal-field">
-          <label>Fecha de descarga</label>
-          <input type="date" id="m-fechaDescarga">
-        </div>
-      </div>
-
-      <div class="modal-field">
-        <label>N° Guía de despacho</label>
-        <input type="text" id="m-guia" placeholder="Ej: 123456">
-      </div>
-
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Cantidad de carga</label>
-          <input type="number" id="m-cantidad" placeholder="Ej: 32000" step="0.01" min="0">
-        </div>
-        <div class="modal-field">
-          <label>Unidad de medida</label>
-          <select id="m-unidad">
-            <option value="">Seleccionar...</option>
-            <option>LITROS</option>
-            <option>TONELADAS</option>
-            <option>M3</option>
-            <option>KG</option>
-            <option>CAJAS</option>
-            <option>PALLETS</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="modal-field">
-        <label>Pesaje (kg bruto) — opcional</label>
-        <input type="number" id="m-pesaje" placeholder="Ej: 38500">
-      </div>
-
-      <div class="modal-field">
-        <label>Observaciones de descarga — opcional</label>
-        <input type="text" id="m-obsDescarga" placeholder="Novedades en destino...">
-      </div>
-
-      <div class="saving-msg" id="savingMsg">Guardando en Google Sheets...</div>
-      <div class="sheets-ok" id="sheetsOk">✓ Guardado en planilla mensual</div>
-
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-confirm" id="btnConfirm" onclick="confirmarTerminado()">Guardar en planilla →</button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-handle"></div>
+<div class="modal-header"><div class="modal-title">Confirmar cierre · <span>Viaje terminado</span></div><div class="modal-sub">Completá los datos de <strong id="mTripLabel">—</strong> para guardar en la planilla</div></div>
+<div class="modal-body">
+<div class="config-notice" id="configNotice" style="display:none;">⚠ Aún no configuraste el link de Google Sheets. Los datos se guardarán localmente.<br><a onclick="showSetup()">Ver instrucciones de configuración →</a></div>
+<div class="modal-row">
+<div class="modal-field"><label>Fecha de carga</label><input type="date" id="m-fechaCarga"></div>
+<div class="modal-field"><label>Fecha de descarga</label><input type="date" id="m-fechaDescarga"></div>
+</div>
+<div class="modal-field"><label>N° Guía de despacho</label><input type="text" id="m-guia" placeholder="Ej: 123456"></div>
+<div class="modal-row">
+<div class="modal-field"><label>Cantidad de carga</label><input type="number" id="m-cantidad" placeholder="Ej: 32000" step="0.01" min="0"></div>
+<div class="modal-field"><label>Unidad de medida</label><select id="m-unidad"><option value="">Seleccionar...</option><option>LITROS</option><option>TONELADAS</option><option>M3</option><option>KG</option><option>CAJAS</option><option>PALLETS</option></select></div>
+</div>
+<div class="modal-field"><label>Pesaje (kg bruto) — opcional</label><input type="number" id="m-pesaje" placeholder="Ej: 38500"></div>
+<div class="modal-field"><label>Observaciones de descarga — opcional</label><input type="text" id="m-obsDescarga" placeholder="Novedades en destino..."></div>
+<div class="saving-msg" id="savingMsg">Guardando en Google Sheets...</div>
+<div class="sheets-ok" id="sheetsOk">✓ Guardado en planilla mensual</div>
+</div>
+<div class="modal-footer"><button class="btn-cancel" onclick="closeModal()">Cancelar</button><button class="btn-confirm" id="btnConfirm" onclick="confirmarTerminado()">Guardar en planilla →</button></div>
+</div>
 </div>
 
-<!-- ── SETUP MODAL ── -->
+<!-- SETUP MODAL -->
 <div class="modal-overlay" id="setupModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title">Conectar <span>Google Sheets</span></div>
-      <div class="modal-sub">Hacé esto una sola vez — después funciona solo</div>
-    </div>
-    <div class="modal-body" style="padding:16px 20px;">
-
-      <div style="display:flex;flex-direction:column;gap:12px;font-size:0.82rem;color:var(--text2);line-height:1.6;">
-
-        <div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
-          <div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 1 — Crear la planilla</div>
-          Abrí <strong style="color:var(--text);">sheets.google.com</strong>, creá una hoja nueva y nombrala <strong style="color:var(--orange);">Pola - Registros</strong>
-        </div>
-
-        <div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
-          <div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 2 — Crear el script</div>
-          En la planilla: <strong style="color:var(--text);">Extensiones → Apps Script</strong><br>
-          Borrá el código que aparece y pegá el código que aparece abajo. Guardá y desplegá como <strong style="color:var(--text);">Aplicación web</strong> con acceso <em>Cualquier persona</em>.
-        </div>
-
-        <div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
-          <div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 3 — Pegar el link acá</div>
-          <input type="text" id="setup-url" placeholder="https://script.google.com/macros/s/..."
-            style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:7px;
-            color:var(--text);font-family:'Syne Mono',monospace;font-size:0.72rem;padding:10px 12px;">
-          <button onclick="saveScriptUrl()"
-            style="width:100%;margin-top:8px;padding:10px;border-radius:8px;
-            background:var(--orange);border:none;color:white;font-family:'Syne',sans-serif;
-            font-size:0.85rem;font-weight:800;cursor:pointer;">
-            Guardar link
-          </button>
-        </div>
-
-        <div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
-          <div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Código Apps Script para copiar</div>
-          <pre style="font-family:'Syne Mono',monospace;font-size:0.62rem;color:#6a8a6a;
-            background:var(--bg);padding:12px;border-radius:6px;overflow-x:auto;
-            white-space:pre-wrap;line-height:1.6;border:1px solid var(--border);">function doPost(e) {
-  var sheet = SpreadsheetApp
-    .getActiveSpreadsheet()
-    .getActiveSheet();
-
-  var data = JSON.parse(e.postData.contents);
-
-  // Header si es la primera fila
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      'FECHA REGISTRO','MES','GUIA',
-      'FECHA CARGA','FECHA DESCARGA',
-      'CONDUCTOR','TRACTO','SEMI',
-      'CLIENTE','PRODUCTO',
-      'ORIGEN','DESTINO',
-      'CANTIDAD','UNIDAD','PESAJE KG',
-      'INTL','OBS SALIDA','OBS DESCARGA'
-    ]);
-  }
-
-  sheet.appendRow([
-    data.fechaRegistro, data.mes, data.guia,
-    data.fechaCarga, data.fechaDescarga,
-    data.conductor, data.tracto, data.semi,
-    data.cliente, data.producto,
-    data.origen, data.destino,
-    data.cantidad, data.unidad, data.pesaje,
-    data.intl, data.obs, data.obsDescarga
-  ]);
-
-  return ContentService
-    .createTextOutput(JSON.stringify({ok:true}))
-    .setMimeType(ContentService.MimeType.JSON);
-}</pre>
-        </div>
-
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeSetup()">Cerrar</button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-handle"></div>
+<div class="modal-header"><div class="modal-title">Conectar <span>Google Sheets</span></div><div class="modal-sub">Hacé esto una sola vez — después funciona solo</div></div>
+<div class="modal-body" style="padding:16px 20px;">
+<div style="display:flex;flex-direction:column;gap:12px;font-size:0.82rem;color:var(--text2);line-height:1.6;">
+<div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
+<div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 1</div>
+Abrí <strong style="color:var(--text);">sheets.google.com</strong>, creá una hoja nueva llamada <strong style="color:var(--orange);">Pola - Registros</strong>
 </div>
-
-<script>
-// ── STORAGE KEY ──
-const STORAGE_KEY = 'pola_trips_v1';
-
-// ── SCRIPT URL (pre-configurado) ──
-(function() {
-  if (!localStorage.getItem('pola_script_url')) {
-    localStorage.setItem('pola_script_url', 'https://script.google.com/macros/s/AKfycbxJrBponyiWzDKj1AH9OHuhlO-eynTyRoE5Hb6oyE6hRQeL8aZCGVRbmX33rgdVlQXi_w/exec');
+<div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
+<div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 2</div>
+En la planilla: <strong style="color:var(--text);">Extensiones → Apps Script</strong>. Pegá el código de abajo y desplegá como <strong>Aplicación web</strong> con acceso <em>Cualquier persona</em>.
+</div>
+<div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
+<div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Paso 3</div>
+<input type="text" id="setup-url" placeholder="https://script.google.com/macros/s/..." style="width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:'Syne Mono',monospace;font-size:0.72rem;padding:10px 12px;">
+<button onclick="saveScriptUrl()" style="width:100%;margin-top:8px;padding:10px;border-radius:8px;background:var(--orange);border:none;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;">Guardar link</button>
+</div>
+<div style="background:var(--s2);border-radius:10px;padding:14px;border:1px solid var(--border2);">
+<div style="font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Código Apps Script</div>
+<pre style="font-family:'Syne Mono',monospace;font-size:0.62rem;color:#6a8a6a;background:var(--bg);padding:12px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;line-height:1.6;border:1px solid var(--border);">const SHEET_VIAJES = 'Viajes';
+const SHEET_REGISTROS = 'Registros';
+function doGet(e) {
+  if (e.parameter.action === 'getViajes') return getViajes();
+  return resp({ok:false});
+}
+function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+  if (data.action === 'saveViaje') return saveViaje(data);
+  if (data.action === 'updateEstado') return updateEstado(data);
+  if (data.action === 'deleteViaje') return deleteViaje(data);
+  if (data.action === 'saveRegistro') return saveRegistroFn(data);
+  return resp({ok:false});
+}
+function resp(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+function getSheet(name, headers) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(name);
+  if (!sh) { sh = ss.insertSheet(name); sh.appendRow(headers); }
+  return sh;
+}
+function saveViaje(d) {
+  var sh = getSheet(SHEET_VIAJES,['ID','FECHA','HORA','CONDUCTOR','TRACTO','SEMI','CLIENTE','PRODUCTO','ORIGEN','DESTINO','INTL','OBS','ESTADO']);
+  var vals = sh.getDataRange().getValues();
+  for (var i=1;i&lt;vals.length;i++) { if (String(vals[i][0])===String(d.id)) return resp({ok:true,dup:true}); }
+  sh.appendRow([d.id,d.fecha,d.hora,d.conductor,d.tracto,d.semi||'',d.cliente,d.producto,d.origen,d.destino,d.intl,d.obs||'',d.estado||'EN RUTA']);
+  return resp({ok:true});
+}
+function updateEstado(d) {
+  var sh = getSheet(SHEET_VIAJES,['ID','FECHA','HORA','CONDUCTOR','TRACTO','SEMI','CLIENTE','PRODUCTO','ORIGEN','DESTINO','INTL','OBS','ESTADO']);
+  var vals = sh.getDataRange().getValues();
+  for (var i=1;i&lt;vals.length;i++) { if (String(vals[i][0])===String(d.id)) { sh.getRange(i+1,13).setValue(d.estado); return resp({ok:true}); } }
+  return resp({ok:false,error:'not found'});
+}
+function deleteViaje(d) {
+  var sh = getSheet(SHEET_VIAJES,['ID','FECHA','HORA','CONDUCTOR','TRACTO','SEMI','CLIENTE','PRODUCTO','ORIGEN','DESTINO','INTL','OBS','ESTADO']);
+  var vals = sh.getDataRange().getValues();
+  for (var i=1;i&lt;vals.length;i++) { if (String(vals[i][0])===String(d.id)) { sh.deleteRow(i+1); return resp({ok:true}); } }
+  return resp({ok:true});
+}
+function getViajes() {
+  var sh = getSheet(SHEET_VIAJES,['ID','FECHA','HORA','CONDUCTOR','TRACTO','SEMI','CLIENTE','PRODUCTO','ORIGEN','DESTINO','INTL','OBS','ESTADO']);
+  var vals = sh.getDataRange().getValues();
+  var viajes = [];
+  for (var i=1;i&lt;vals.length;i++) {
+    if (!vals[i][0]) continue;
+    viajes.push({id:vals[i][0],fecha:vals[i][1],hora:vals[i][2],conductor:vals[i][3],tracto:vals[i][4],semi:vals[i][5],cliente:vals[i][6],producto:vals[i][7],origen:vals[i][8],destino:vals[i][9],intl:vals[i][10],obs:vals[i][11],estado:vals[i][12]||'EN RUTA'});
   }
+  return resp({ok:true,viajes:viajes});
+}
+function saveRegistroFn(d) {
+  var sh = getSheet(SHEET_REGISTROS,['FECHA REGISTRO','MES','GUIA','FECHA CARGA','FECHA DESCARGA','CONDUCTOR','TRACTO','SEMI','CLIENTE','PRODUCTO','ORIGEN','DESTINO','CANTIDAD','UNIDAD','PESAJE KG','INTL','OBS SALIDA','OBS DESCARGA']);
+  var now = new Date();
+  sh.appendRow([d.fechaRegistro,d.mes,d.guia,d.fechaCarga,d.fechaDescarga,d.conductor,d.tracto,d.semi,d.cliente,d.producto,d.origen,d.destino,d.cantidad,d.unidad,d.pesaje,d.intl,d.obs,d.obsDescarga]);
+  return resp({ok:true});
+}</pre>
+</div>
+</div>
+</div>
+<div class="modal-footer"><button class="btn-cancel" onclick="closeSetup()">Cerrar</button></div>
+</div>
+</div>
+<script>
+const STORAGE_KEY = 'pola_trips_v1';
+const STORAGE_LISTAS = 'pola_listas_v1';
+const BASE_TRACTOS = ['DBCY-48','DJZD-92','DPJR-64','DRKG-75','GSVC-91','GSVC-92','JTVH-78','LKVW-35','LLXF-38','PLZR-34','PSXG-52','PYCF-69','SJJW-71','SJJW-83','SJJX-22'];
+const BASE_SEMIS = ['GRGF-13','HXGF-55','HXGX-47','JA-7004','JD-1915','JD-4036','JF-3789','JF-3937','JG-4452','JG-5913','JJ-2101','JL-3012','JN-1478','JN-1494','KDJL-85','KYLH-96','KYRS-72','PXHW-31'];
+const BASE_CONDUCTORES = ['ALEJANDRO BARRA','ALEX ACUÑA','BALTAZAR CHAPERON','CAMILO MUÑOZ','JOSE JARA','JOSE MARTINEZ','JUAN NAVARRO','LEONEL CAYUMAN','LUIS GONZALEZ','NELSON MUÑOZ','OSCAR CARTER','RENE LANDEROS'];
+const BASE_CLIENTES = ['VDA','ESMAX','ENFLEX','NEW ANDES CHEMICALS','ENEX','QUIMICA LATINOAMERICANA','LOGINET','VOLCAN','COVAEM','COAGRA','PACIFICO SUR','BULLCOM','DIDEVAL','BITUMIX','RENO','LUVAL'];
+const BASE_PRODUCTOS = ['DIESEL','GASOLINA 93','GASOLINA 95','GASOLINA 97','JET','ALCOHOL','VINO','PISCO','AGUARRAS','SOLVENTE B','AROMATICO PESADO','BUTIL GLICOL','EMULSION ASFALTICA','ASFALTO','ACIDO SULFURICO','NAFTA','MEZCLA HIDROCARBUROS','COVESOL','AXXSOL 30','INTERFASES','COLPA CHANCADA','VOLCANITA','FRUTA','CONTENEDOR','VACIO'];
+
+function getListas() {
+  try {
+    const s = JSON.parse(localStorage.getItem(STORAGE_LISTAS)||'{}');
+    return {
+      tractos:[...BASE_TRACTOS,...(s.tractos||[])],
+      semis:[...BASE_SEMIS,...(s.semis||[])],
+      conductores:[...BASE_CONDUCTORES,...(s.conductores||[])],
+      clientes:[...BASE_CLIENTES,...(s.clientes||[])],
+      productos:[...BASE_PRODUCTOS,...(s.productos||[])]
+    };
+  } catch { return {tractos:[...BASE_TRACTOS],semis:[...BASE_SEMIS],conductores:[...BASE_CONDUCTORES],clientes:[...BASE_CLIENTES],productos:[...BASE_PRODUCTOS]}; }
+}
+function getCustomListas() { try { return JSON.parse(localStorage.getItem(STORAGE_LISTAS)||'{}'); } catch { return {}; } }
+function saveCustomListas(obj) { localStorage.setItem(STORAGE_LISTAS,JSON.stringify(obj)); }
+
+(function(){
+  if (!localStorage.getItem('pola_script_url'))
+    localStorage.setItem('pola_script_url','https://script.google.com/macros/s/AKfycbxJrBponyiWzDKj1AH9OHuhlO-eynTyRoE5Hb6oyE6hRQeL8aZCGVRbmX33rgdVlQXi_w/exec');
 })();
 
-// ── NAVIGATION ──
 function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (id === 'ops') renderTrips();
+  if (id==='ops') renderTrips();
+  if (id==='dispatch') populateSelects();
+  if (id==='admin') renderAdmin();
 }
 
-// ── TRIPS DATA ──
-function getTrips() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+function populateSelects() {
+  const L = getListas();
+  [{id:'f-tracto',items:L.tractos,ph:'Seleccionar tracto...'},
+   {id:'f-semi',items:L.semis,ph:'Seleccionar semi...'},
+   {id:'f-conductor',items:L.conductores,ph:'Seleccionar conductor...'},
+   {id:'f-cliente',items:L.clientes,ph:'Seleccionar cliente...'},
+   {id:'f-producto',items:L.productos,ph:'Seleccionar producto...'}
+  ].forEach(({id,items,ph})=>{
+    const sel=document.getElementById(id);
+    const cur=sel.value;
+    sel.innerHTML='<option value="">'+ph+'</option>';
+    items.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;if(v===cur)o.selected=true;sel.appendChild(o);});
+  });
 }
 
-function saveTrip(trip) {
-  const trips = getTrips();
-  trips.unshift(trip);
-  // keep last 200
-  if (trips.length > 200) trips.pop();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+function renderAdmin() {
+  const L=getListas(), C=getCustomListas();
+  const BASES={tractos:BASE_TRACTOS,semis:BASE_SEMIS,conductores:BASE_CONDUCTORES,clientes:BASE_CLIENTES,productos:BASE_PRODUCTOS};
+  ['tractos','semis','conductores','clientes','productos'].forEach(key=>{
+    const list=document.getElementById('list-'+key);
+    const count=document.getElementById('count-'+key);
+    count.textContent=L[key].length;
+    list.innerHTML='';
+    L[key].forEach(item=>{
+      const isBase=BASES[key].includes(item);
+      const div=document.createElement('div');
+      div.className='admin-item'+(isBase?' default':'');
+      const safe=item.replace(/\/g,'\\').replace(/'/g,"\'");
+      div.innerHTML='<span>'+item+'</span>'+(
+        !isBase
+          ?'<button class="admin-item-del" onclick="removeItem(\''+key+'\',\''+safe+'\')">✕</button>'
+          :'<span style="font-size:0.6rem;color:var(--text3);font-family:Syne Mono,monospace;">base</span>'
+      );
+      list.appendChild(div);
+    });
+  });
 }
 
-// ── SUBMIT ──
+function addItem(key) {
+  const input=document.getElementById('input-'+key);
+  const val=input.value.trim().toUpperCase();
+  if (!val) return;
+  const C=getCustomListas();
+  if (!C[key]) C[key]=[];
+  if (getListas()[key].includes(val)){input.value='';return;}
+  C[key].push(val);
+  saveCustomListas(C);
+  input.value='';
+  renderAdmin();
+}
+
+function removeItem(key,val) {
+  const C=getCustomListas();
+  if (!C[key]) return;
+  C[key]=C[key].filter(v=>v!==val);
+  saveCustomListas(C);
+  renderAdmin();
+}
+
+function getTrips() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch { return []; } }
+
 function submitTrip() {
-  const tracto   = document.getElementById('f-tracto').value;
-  const semi     = document.getElementById('f-semi').value;
-  const conductor= document.getElementById('f-conductor').value;
-  const cliente  = document.getElementById('f-cliente').value;
-  const producto = document.getElementById('f-producto').value;
-  const origen   = document.getElementById('f-origen').value.trim();
-  const destino  = document.getElementById('f-destino').value.trim();
-  const intl     = document.getElementById('f-intl').value;
-  const obs      = document.getElementById('f-obs').value.trim();
-
-  // validation
-  if (!tracto || !conductor || !cliente || !producto || !origen || !destino) {
-    alert('Por favor completá los campos obligatorios: tracto, conductor, cliente, producto, origen y destino.');
-    return;
-  }
-
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
-
-  const now = new Date();
-  const trip = {
-    id: Date.now(),
-    fecha: now.toLocaleDateString('es-CL'),
-    hora: now.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'}),
-    tracto, semi, conductor, cliente, producto,
-    origen, destino, intl, obs,
-    estado: 'EN RUTA'
-  };
-
-  saveTrip(trip);
-
-  // show success
-  const overlay = document.getElementById('successOverlay');
-  document.getElementById('successTime').textContent =
-    now.toLocaleString('es-CL', {dateStyle:'short', timeStyle:'short'});
-  document.getElementById('successDetail').innerHTML =
-    `<strong>${tracto}</strong> · ${semi || '—'}<br>` +
-    `${conductor}<br>` +
-    `${cliente} · ${producto}<br>` +
-    `${origen} → ${destino}` +
-    (obs ? `<br><em>${obs}</em>` : '');
-
-  overlay.classList.add('show');
-  btn.disabled = false;
-  btn.textContent = 'Registrar salida del camión';
+  const tracto=document.getElementById('f-tracto').value;
+  const semi=document.getElementById('f-semi').value;
+  const conductor=document.getElementById('f-conductor').value;
+  const cliente=document.getElementById('f-cliente').value;
+  const producto=document.getElementById('f-producto').value;
+  const origen=document.getElementById('f-origen').value.trim();
+  const destino=document.getElementById('f-destino').value.trim();
+  const intl=document.getElementById('f-intl').value;
+  const obs=document.getElementById('f-obs').value.trim();
+  if (!tracto||!conductor||!cliente||!producto||!origen||!destino){alert('Completá los campos obligatorios.');return;}
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='Guardando...';
+  const now=new Date();
+  const trip={id:Date.now(),fecha:now.toLocaleDateString('es-CL'),hora:now.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'}),tracto,semi,conductor,cliente,producto,origen,destino,intl,obs,estado:'EN RUTA'};
+  const trips=getTrips();trips.unshift(trip);if(trips.length>200)trips.pop();localStorage.setItem(STORAGE_KEY,JSON.stringify(trips));
+  const url=localStorage.getItem('pola_script_url');
+  if (url) fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'saveViaje',...trip})}).catch(e=>console.log(e));
+  document.getElementById('successTime').textContent=now.toLocaleString('es-CL',{dateStyle:'short',timeStyle:'short'});
+  document.getElementById('successDetail').innerHTML='<strong>'+tracto+'</strong> · '+(semi||'—')+'<br>'+conductor+'<br>'+cliente+' · '+producto+'<br>'+origen+' → '+destino+(obs?'<br><em>'+obs+'</em>':'');
+  document.getElementById('successOverlay').classList.add('show');
+  btn.disabled=false;btn.textContent='Registrar salida del camión';
 }
 
 function resetForm() {
   document.getElementById('successOverlay').classList.remove('show');
-  ['f-tracto','f-semi','f-conductor','f-cliente','f-producto','f-intl'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  ['f-origen','f-destino','f-obs'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  ['f-tracto','f-semi','f-conductor','f-cliente','f-producto','f-intl'].forEach(id=>document.getElementById(id).value='');
+  ['f-origen','f-destino','f-obs'].forEach(id=>document.getElementById(id).value='');
 }
 
-// ── ESTADO CONFIG ──
-const ESTADOS = {
-  'EN RUTA':          { label:'EN RUTA',          cls:'en-ruta',      dot:'en-ruta'     },
-  'CARGANDO':         { label:'CARGANDO',          cls:'cargando',     dot:'cargando'    },
-  'EN DESTINO':       { label:'EN DESTINO',        cls:'a-destino',    dot:'a-destino'   },
-  'CARGA POR CONF.':  { label:'CARGA POR CONF.',   cls:'por-confirmar',dot:'por-confirmar'},
-  'TERMINADO':        { label:'TERMINADO',         cls:'terminado',    dot:'terminado'   },
-};
+const ESTADOS={'EN RUTA':{label:'EN RUTA',cls:'en-ruta',dot:'en-ruta'},'CARGANDO':{label:'CARGANDO',cls:'cargando',dot:'cargando'},'EN DESTINO':{label:'EN DESTINO',cls:'a-destino',dot:'a-destino'},'CARGA POR CONF.':{label:'CARGA POR CONF.',cls:'por-confirmar',dot:'por-confirmar'},'TERMINADO':{label:'TERMINADO',cls:'terminado',dot:'terminado'}};
+let _pendingTerminarId=null;
 
-// ── UPDATE ESTADO ──
-let _pendingTerminarId = null;
-
-function updateEstado(id, nuevoEstado) {
-if (nuevoEstado === 'TERMINADO') {
-openTerminarModal(id);
-return;
-}
-const trips = getTrips();
-const idx = trips.findIndex(t => t.id === id);
-if (idx !== -1) {
-trips[idx].estado = nuevoEstado;
-localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
-
-// Sincronizar estado con Google Sheets
-const url = localStorage.getItem('pola_script_url');
-if (url) {
-const trip = trips[idx];
-fetch(url, {
-method: 'POST',
-mode: 'no-cors',
-headers: {'Content-Type': 'text/plain'},
-body: JSON.stringify({
-action: 'updateEstado',
-id: id,
-estado: nuevoEstado,
-tracto: trip.tracto,
-conductor: trip.conductor,
-cliente: trip.cliente,
-producto: trip.producto,
-origen: trip.origen,
-destino: trip.destino,
-fechaActualizacion: new Date().toLocaleString('es-CL')
-})
-}).catch(e => console.warn('Error sync estado:', e));
+function updateEstado(id,nuevoEstado) {
+  if (nuevoEstado==='TERMINADO'){openTerminarModal(id);return;}
+  const trips=getTrips();
+  const idx=trips.findIndex(t=>t.id===id);
+  if (idx!==-1){
+    trips[idx].estado=nuevoEstado;
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(trips));
+    const url=localStorage.getItem('pola_script_url');
+    if (url) fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'updateEstado',id,estado:nuevoEstado})}).catch(()=>{});
+    renderTrips();
+  }
 }
 
-renderTrips();
-}
-}
-// ── TERMINAR MODAL ──
 function openTerminarModal(id) {
-  _pendingTerminarId = id;
-  const trips = getTrips();
-  const trip = trips.find(t => t.id === id);
-  if (!trip) return;
-
-  document.getElementById('mTripLabel').textContent = trip.tracto + ' · ' + trip.conductor;
-
-  // default dates = today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('m-fechaCarga').value = today;
-  document.getElementById('m-fechaDescarga').value = today;
-  document.getElementById('m-guia').value = trip.obs || '';
-  document.getElementById('m-cantidad').value = '';
-  document.getElementById('m-unidad').value = '';
-  document.getElementById('m-pesaje').value = '';
-  document.getElementById('m-obsDescarga').value = '';
+  _pendingTerminarId=id;
+  const trip=getTrips().find(t=>t.id===id);if(!trip)return;
+  document.getElementById('mTripLabel').textContent=trip.tracto+' · '+trip.conductor;
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('m-fechaCarga').value=today;
+  document.getElementById('m-fechaDescarga').value=today;
+  document.getElementById('m-guia').value=trip.obs||'';
+  ['m-cantidad','m-pesaje','m-obsDescarga'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('m-unidad').value='';
   document.getElementById('savingMsg').classList.remove('show');
   document.getElementById('sheetsOk').classList.remove('show');
-
-  // check if script url configured
-  const url = localStorage.getItem('pola_script_url');
-  document.getElementById('configNotice').style.display = url ? 'none' : 'block';
-
-  document.getElementById('btnConfirm').disabled = false;
+  const url=localStorage.getItem('pola_script_url');
+  document.getElementById('configNotice').style.display=url?'none':'block';
+  document.getElementById('btnConfirm').disabled=false;
   document.getElementById('terminarModal').classList.add('show');
 }
-
-function closeModal() {
-  document.getElementById('terminarModal').classList.remove('show');
-  _pendingTerminarId = null;
-}
+function closeModal(){document.getElementById('terminarModal').classList.remove('show');_pendingTerminarId=null;}
 
 async function confirmarTerminado() {
-  const id = _pendingTerminarId;
-  if (!id) return;
-
-  const fechaCarga    = document.getElementById('m-fechaCarga').value;
-  const fechaDescarga = document.getElementById('m-fechaDescarga').value;
-  const guia          = document.getElementById('m-guia').value.trim();
-  const cantidad      = document.getElementById('m-cantidad').value;
-  const unidad        = document.getElementById('m-unidad').value;
-  const pesaje        = document.getElementById('m-pesaje').value;
-  const obsDescarga   = document.getElementById('m-obsDescarga').value.trim();
-
-  const trips = getTrips();
-  const trip  = trips.find(t => t.id === id);
-  if (!trip) return;
-  const now   = new Date();
-  const mes   = now.toLocaleString('es-CL', {month:'long', year:'numeric'});
-
-  const registro = {
-    fechaRegistro: now.toLocaleString('es-CL'),
-    mes,
-    guia:          guia || '—',
-    fechaCarga:    fechaCarga,
-    fechaDescarga: fechaDescarga,
-    conductor:     trip.conductor,
-    tracto:        trip.tracto,
-    semi:          trip.semi || '—',
-    cliente:       trip.cliente,
-    producto:      trip.producto,
-    origen:        trip.origen,
-    destino:       trip.destino,
-    cantidad:      cantidad || '—',
-    unidad:        unidad || '—',
-    pesaje:        pesaje || '—',
-    intl:          trip.intl,
-    obs:           trip.obs || '—',
-    obsDescarga:   obsDescarga || '—',
-        id:           trip.id,
+  const id=_pendingTerminarId;if(!id)return;
+  const trips=getTrips();
+  const trip=trips.find(t=>t.id===id);if(!trip)return;
+  const now=new Date();
+  const registro={
+    action:'saveRegistro',
+    fechaRegistro:now.toLocaleString('es-CL'),
+    mes:now.toLocaleString('es-CL',{month:'long',year:'numeric'}),
+    guia:document.getElementById('m-guia').value.trim()||'—',
+    fechaCarga:document.getElementById('m-fechaCarga').value,
+    fechaDescarga:document.getElementById('m-fechaDescarga').value,
+    conductor:trip.conductor,tracto:trip.tracto,semi:trip.semi||'—',
+    cliente:trip.cliente,producto:trip.producto,
+    origen:trip.origen,destino:trip.destino,
+    cantidad:document.getElementById('m-cantidad').value||'—',
+    unidad:document.getElementById('m-unidad').value||'—',
+    pesaje:document.getElementById('m-pesaje').value||'—',
+    intl:trip.intl,obs:trip.obs||'—',
+    obsDescarga:document.getElementById('m-obsDescarga').value.trim()||'—',id:trip.id
   };
-
-  const btn = document.getElementById('btnConfirm');
-  btn.disabled = true;
+  const btn=document.getElementById('btnConfirm');btn.disabled=true;
   document.getElementById('savingMsg').classList.add('show');
-
-  // try to send to Google Sheets
-  const scriptUrl = localStorage.getItem('pola_script_url');
-  let sentOk = false;
-
-  if (scriptUrl) {
-    try {
-      await fetch(scriptUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {'Content-Type':'text/plain'},
-        body: JSON.stringify(Object.assign({action:'saveViaje'},registro))
-      });
-      sentOk = true;
-    } catch(e) {
-      console.warn('Sheets error:', e);
-    }
+  const scriptUrl=localStorage.getItem('pola_script_url');let sentOk=false;
+  if (scriptUrl){try{await fetch(scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(registro)});sentOk=true;}catch(e){console.warn(e);}}
+  const local=JSON.parse(localStorage.getItem('pola_registros')||'[]');local.unshift(registro);localStorage.setItem('pola_registros',JSON.stringify(local));
+  const idx=trips.findIndex(t=>t.id===id);
+  if (idx!==-1){
+    trips[idx].estado='TERMINADO';
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(trips));
+    if (scriptUrl) fetch(scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'updateEstado',id,estado:'TERMINADO'})}).catch(()=>{});
   }
-
-  // save locally too (backup)
-  const local = JSON.parse(localStorage.getItem('pola_registros') || '[]');
-  local.unshift(registro);
-  localStorage.setItem('pola_registros', JSON.stringify(local));
-
-  // mark trip as terminado
-  const idx = trips.findIndex(t => t.id === id);
-  if (idx !== -1) {
-    trips[idx].estado = 'TERMINADO';
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
-  }
-
   document.getElementById('savingMsg').classList.remove('show');
-  document.getElementById('sheetsOk').textContent = sentOk
-    ? '✓ Guardado en Google Sheets · planilla Pola - Registros'
-    : '✓ Guardado localmente (configurá Sheets para sync automático)';
+  document.getElementById('sheetsOk').textContent=sentOk?'✓ Guardado en Google Sheets · planilla Pola - Registros':'✓ Guardado localmente (configurá Sheets para sync)';
   document.getElementById('sheetsOk').classList.add('show');
-
-  btn.textContent = 'Listo ✓';
-  setTimeout(() => {
-    closeModal();
-    renderTrips();
-    btn.textContent = 'Guardar en planilla →';
-    btn.disabled = false;
-  }, 1800);
+  btn.textContent='Listo ✓';
+  setTimeout(()=>{closeModal();renderTrips();btn.textContent='Guardar en planilla →';btn.disabled=false;},1800);
 }
 
-// ── SETUP ──
-function showSetup() {
-  document.getElementById('terminarModal').classList.remove('show');
-  document.getElementById('setupModal').classList.add('show');
-  const url = localStorage.getItem('pola_script_url');
-  if (url) document.getElementById('setup-url').value = url;
-}
+function showSetup(){document.getElementById('terminarModal').classList.remove('show');document.getElementById('setupModal').classList.add('show');const url=localStorage.getItem('pola_script_url');if(url)document.getElementById('setup-url').value=url;}
+function closeSetup(){document.getElementById('setupModal').classList.remove('show');}
+function saveScriptUrl(){const url=document.getElementById('setup-url').value.trim();if(!url.startsWith('https://script.google.com')){alert('No parece un link de Apps Script.');return;}localStorage.setItem('pola_script_url',url);alert('✓ Link guardado.');closeSetup();}
 
-function closeSetup() {
-  document.getElementById('setupModal').classList.remove('show');
-}
-
-function saveScriptUrl() {
-  const url = document.getElementById('setup-url').value.trim();
-  if (!url.startsWith('https://script.google.com')) {
-    alert('Ese no parece un link de Google Apps Script. Verificá que empiece con https://script.google.com');
-    return;
-  }
-  localStorage.setItem('pola_script_url', url);
-  alert('✓ Link guardado. Desde ahora los registros se envían automáticamente a tu planilla.');
-  closeSetup();
-}
-
-// ── DELETE TRIP ──
 function deleteTrip(id) {
-  if (!confirm('¿Eliminar este viaje de la lista?')) return;
-  const trips = getTrips().filter(t => t.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+  if (!confirm('¿Eliminar este viaje?')) return;
+  const trips=getTrips().filter(t=>t.id!==id);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(trips));
+  const url=localStorage.getItem('pola_script_url');
+  if (url) fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'deleteViaje',id})}).catch(()=>{});
   renderTrips();
 }
 
-// ── RENDER TRIPS ──
 function renderTrips() {
-  const trips = getTrips();
-  const list = document.getElementById('tripsList');
-  const empty = document.getElementById('emptyState');
-  const count = document.getElementById('tripCount');
-  const sbActive = document.getElementById('sbActive');
-  const sbToday = document.getElementById('sbToday');
-
-  const today = new Date().toLocaleDateString('es-CL');
-  const todayTrips = trips.filter(t => t.estado !== 'TERMINADO');
-  const enRuta = todayTrips.filter(t => t.estado === 'EN RUTA').length;
-
-  count.textContent = todayTrips.length;
-  sbActive.textContent = enRuta + ' en ruta';
-  sbToday.textContent = todayTrips.length + ' viajes hoy';
-
-  list.querySelectorAll('.trip-card').forEach(c => c.remove());
-
-  if (todayTrips.length === 0) {
-    empty.style.display = 'flex';
-    return;
-  }
-
-  empty.style.display = 'none';
-
-  todayTrips.forEach((trip, i) => {
-    const est = ESTADOS[trip.estado] || ESTADOS['EN RUTA'];
-    const card = document.createElement('div');
-    card.className = 'trip-card' + (i === 0 ? ' selected' : '');
-
-    // estado buttons
-    const estBtns = Object.entries(ESTADOS).map(([key, val]) =>
-      `<button class="est-btn ${trip.estado === key ? 'sel-'+val.cls : ''}"
-        onclick="event.stopPropagation();updateEstado(${trip.id},'${key}')"
-      >${val.label}</button>`
-    ).join('');
-
-    card.innerHTML = `
-      <div class="tc-top">
-        <div class="tc-patente">${trip.tracto}</div>
-        <div class="tc-hora">${trip.hora}</div>
-      </div>
-      <div class="tc-conductor">${trip.conductor}</div>
-      <div class="tc-ruta">
-        <span>${trip.origen}</span>
-        <span class="arrow">→</span>
-        <span>${trip.destino}</span>
-      </div>
-      <div class="tc-tags" style="margin-bottom:5px;">
-        <span class="estado-badge ${est.cls}"><span class="edo ${est.dot}"></span>${est.label}</span>
-        <span class="tc-tag carga">${trip.producto}</span>
-        <span class="tc-tag cliente">${trip.cliente}</span>
-        ${trip.intl === 'SI' ? '<span class="tc-tag intl">INTL</span>' : '<span class="tc-tag nac">NAC</span>'}
-        ${trip.semi ? '<span class="tc-tag" style="background:rgba(255,255,255,0.03);color:#555350;">'+trip.semi+'</span>' : ''}
-      </div>
-      <div class="tc-actions">
-        <div style="width:100%;font-family:'Syne Mono',monospace;font-size:0.55rem;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;">Cambiar estado:</div>
-        <div class="estado-selector">${estBtns}</div>
-        <div style="width:100%;margin-top:6px;">
-          <button class="tc-action-btn del" onclick="event.stopPropagation();deleteTrip(${trip.id})">
-            🗑 Eliminar viaje
-          </button>
-        </div>
-      </div>
-    `;
-
-    card.addEventListener('click', () => {
-      list.querySelectorAll('.trip-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-    });
-
+  const trips=getTrips();
+  const list=document.getElementById('tripsList');
+  const empty=document.getElementById('emptyState');
+  const activeTrips=trips.filter(t=>t.estado!=='TERMINADO');
+  const enRuta=activeTrips.filter(t=>t.estado==='EN RUTA').length;
+  document.getElementById('tripCount').textContent=activeTrips.length;
+  document.getElementById('sbActive').textContent=enRuta+' en ruta';
+  document.getElementById('sbToday').textContent=activeTrips.length+' viajes hoy';
+  list.querySelectorAll('.trip-card').forEach(c=>c.remove());
+  if (activeTrips.length===0){empty.style.display='flex';return;}
+  empty.style.display='none';
+  activeTrips.forEach((trip,i)=>{
+    const est=ESTADOS[trip.estado]||ESTADOS['EN RUTA'];
+    const card=document.createElement('div');
+    card.className='trip-card'+(i===0?' selected':'');
+    const estBtns=Object.entries(ESTADOS).map(([key,val])=>'<button class="est-btn '+(trip.estado===key?'sel-'+val.cls:'')+'" onclick="event.stopPropagation();updateEstado('+trip.id+',\''+key+'\')">'+val.label+'</button>').join('');
+    card.innerHTML=
+      '<div class="tc-top"><div class="tc-patente">'+trip.tracto+'</div><div class="tc-hora">'+trip.hora+'</div></div>'+
+      '<div class="tc-conductor">'+trip.conductor+'</div>'+
+      '<div class="tc-ruta"><span>'+trip.origen+'</span><span class="arrow">→</span><span>'+trip.destino+'</span></div>'+
+      '<div class="tc-tags" style="margin-bottom:5px;">'+
+        '<span class="estado-badge '+est.cls+'"><span class="edo '+est.dot+'"></span>'+est.label+'</span>'+
+        '<span class="tc-tag carga">'+trip.producto+'</span>'+
+        '<span class="tc-tag cliente">'+trip.cliente+'</span>'+
+        (trip.intl==='SI'?'<span class="tc-tag intl">INTL</span>':'<span class="tc-tag nac">NAC</span>')+
+        (trip.semi?'<span class="tc-tag" style="background:rgba(255,255,255,0.03);color:#555350;">'+trip.semi+'</span>':'')+
+      '</div>'+
+      '<div class="tc-actions">'+
+        '<div style="width:100%;font-family:\'Syne Mono\',monospace;font-size:0.55rem;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;">Cambiar estado:</div>'+
+        '<div class="estado-selector">'+estBtns+'</div>'+
+        '<div style="width:100%;margin-top:6px;"><button class="tc-action-btn del" onclick="event.stopPropagation();deleteTrip('+trip.id+')">🗑 Eliminar viaje</button></div>'+
+      '</div>';
+    card.addEventListener('click',()=>{list.querySelectorAll('.trip-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');});
     list.appendChild(card);
   });
 }
 
-// ── CLOCK ──
-function tick() {
-  const now = new Date();
-  const el = document.getElementById('sbTime');
-  if (el) el.textContent = now.toLocaleTimeString('es-CL', {hour12:false});
-}
-tick();
-setInterval(tick, 1000);
+function tick(){const el=document.getElementById('sbTime');if(el)el.textContent=new Date().toLocaleTimeString('es-CL',{hour12:false});}
+tick();setInterval(tick,1000);
 
-// auto-refresh ops every 30s
-setInterval(() => {
-  if (document.getElementById('ops').classList.contains('active')) {
-    renderTrips();
-  }
-}, 30000);
-
-// ── SINCRONIZACIÓN EN TIEMPO REAL (Joaquín ve los viajes de Catalina en 30s) ──
+// Sync: Sheets es la fuente de verdad para estados
 async function cargarViajes() {
-  const url = localStorage.getItem('pola_script_url');
-  if (!url) return;
+  const url=localStorage.getItem('pola_script_url');if(!url)return;
   try {
-    const r = await fetch(url + '?action=getViajes');
-    const d = await r.json();
+    const r=await fetch(url+'?action=getViajes');
+    const d=await r.json();
     if (d.ok && Array.isArray(d.viajes)) {
-      trips = (d.viajes||[]).map(v => { if(v.fecha && String(v.fecha).includes("T")) { const dt=new Date(v.fecha); v.fecha=dt.toLocaleDateString("es-CL"); } return v; });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
+      const sheetsViajes=d.viajes.map(v=>{
+        if (v.fecha&&String(v.fecha).includes('T')){const dt=new Date(v.fecha);v.fecha=dt.toLocaleDateString('es-CL');}
+        return v;
+      });
+      const localTrips=getTrips();
+      const localMap={};localTrips.forEach(t=>{localMap[String(t.id)]=t;});
+      const merged=[];
+      sheetsViajes.forEach(sv=>{
+        const sid=String(sv.id);
+        if (localMap[sid]){
+          // Sheets es fuente de verdad para el estado
+          localMap[sid].estado=sv.estado||localMap[sid].estado;
+          merged.push(localMap[sid]);
+          delete localMap[sid];
+        } else { merged.push(sv); }
+      });
+      Object.values(localMap).forEach(t=>merged.push(t));
+      merged.sort((a,b)=>Number(b.id)-Number(a.id));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(merged));
       renderTrips();
     }
-  } catch(e) { console.log('Sync error:', e); }
+  } catch(e){console.log('Sync error:',e);}
 }
-
-// Cargar al inicio y cada 30 segundos
 cargarViajes();
-setInterval(cargarViajes, 30000);
-
-// ── ENVIAR viaje al Apps Script (para que aparezca en Joaquín) ──
-const _origSaveTrip = saveTrip;
-saveTrip = function(trip) {
-  // Guardar localmente primero (comportamiento original)
-  _origSaveTrip(trip);
-  // Enviar al Apps Script en background
-  const url = localStorage.getItem('pola_script_url');
-  if (url) {
-    fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify({action: 'saveViaje', ...trip})
-    }).catch(e => console.log('Error enviando viaje:', e));
-  }
-};
-
-
+setInterval(cargarViajes,30000);
+setInterval(()=>{if(document.getElementById('ops').classList.contains('active'))renderTrips();},30000);
 </script>
 </body>
 </html>
