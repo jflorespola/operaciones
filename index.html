@@ -182,6 +182,23 @@ html,body{height:100%;font-family:'Syne',sans-serif;background:var(--bg);color:v
 .admin-add-btn:hover{background:rgba(144,96,240,0.25);border-color:var(--purple);}
 .admin-notice{padding:10px 14px;font-size:0.72rem;color:var(--text3);border-top:1px solid var(--border);font-family:'Syne Mono',monospace;}
 .admin-notice span{color:var(--text2);}
+
+/* ── DISPONIBLES ── */
+.disponibles-panel{flex-shrink:0;border-top:1px solid var(--border);background:var(--s1);}
+.disp-header{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.disp-header-title{font-family:'Syne Mono',monospace;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);}
+.disp-header-title span{color:var(--green);}
+.disp-toggle{font-family:'Syne Mono',monospace;font-size:0.6rem;color:var(--text3);transition:transform 0.2s;}
+.disp-toggle.open{transform:rotate(180deg);}
+.disp-body{padding:8px 14px 10px;display:flex;flex-direction:column;gap:8px;}
+.disp-body.hidden{display:none;}
+.disp-group{display:flex;flex-direction:column;gap:4px;}
+.disp-group-label{font-family:'Syne Mono',monospace;font-size:0.52rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;}
+.disp-chips{display:flex;flex-wrap:wrap;gap:4px;}
+.disp-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:5px;font-family:'Syne Mono',monospace;font-size:0.6rem;font-weight:600;background:rgba(30,215,96,0.07);border:1px solid rgba(30,215,96,0.15);color:var(--green);}
+.disp-chip.empty{color:var(--text3);background:rgba(255,255,255,0.02);border-color:var(--border);font-style:italic;}
+.disp-dot{width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0;}
+
 @media(max-width:640px){.ops-left{width:100%;}.ops-right{display:none;}.ops-left.hide{display:none;}.ops-right.show{display:flex;position:fixed;inset:50px 0 28px 0;}.home-title{font-size:1.6rem;}}
 </style>
 </head>
@@ -244,6 +261,26 @@ html,body{height:100%;font-family:'Syne',sans-serif;background:var(--bg);color:v
 <div class="ops-left-header"><div class="olh-title">Viajes activos · <span id="tripCount">0</span></div><div class="live-badge"><div class="live-dot"></div>EN VIVO</div></div>
 <div class="trips-list" id="tripsList">
 <div class="empty-state" id="emptyState"><div class="empty-icon">🚛</div><div class="empty-title">Sin viajes registrados hoy</div><div class="empty-sub">Catalina registra la salida de cada camión y aparece acá al instante</div></div>
+</div>
+<div class="disponibles-panel" id="dispPanel">
+<div class="disp-header" onclick="toggleDisp()">
+<div class="disp-header-title">Disponibles · <span id="dispCount">0</span></div>
+<div class="disp-toggle" id="dispToggle">▾</div>
+</div>
+<div class="disp-body" id="dispBody">
+<div class="disp-group">
+<div class="disp-group-label">Tractos libres</div>
+<div class="disp-chips" id="dispTractos"></div>
+</div>
+<div class="disp-group">
+<div class="disp-group-label">Semis libres</div>
+<div class="disp-chips" id="dispSemis"></div>
+</div>
+<div class="disp-group">
+<div class="disp-group-label">Conductores libres</div>
+<div class="disp-chips" id="dispConductores"></div>
+</div>
+</div>
 </div>
 <div class="add-trip-btn" onclick="goTo('dispatch')">+ Registrar salida manual</div>
 </div>
@@ -659,6 +696,46 @@ function renderTrips() {
     card.addEventListener('click',()=>{list.querySelectorAll('.trip-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');});
     list.appendChild(card);
   });
+}
+
+function toggleDisp() {
+const body=document.getElementById('dispBody');
+const tog=document.getElementById('dispToggle');
+body.classList.toggle('hidden');
+tog.classList.toggle('open');
+}
+
+function renderDisponibles() {
+const trips=getTrips().filter(t=>t.estado!=='TERMINADO');
+const L=getListas();
+// Equipos ocupados
+const tractosOcup=new Set(trips.map(t=>t.tracto).filter(Boolean));
+const semisOcup=new Set(trips.map(t=>t.semi).filter(Boolean));
+const conductoresOcup=new Set(trips.map(t=>t.conductor).filter(Boolean));
+// Disponibles
+const tractosLibres=L.tractos.filter(t=>!tractosOcup.has(t));
+const semisLibres=L.semis.filter(s=>!semisOcup.has(s));
+const conductoresLibres=L.conductores.filter(c=>!conductoresOcup.has(c));
+// Count
+const total=tractosLibres.length+conductoresLibres.length;
+document.getElementById('dispCount').textContent=total+' libres';
+// Render chips helper
+function renderChips(containerId, items) {
+const el=document.getElementById(containerId);
+el.innerHTML='';
+if (items.length===0){
+const c=document.createElement('span');c.className='disp-chip empty';c.textContent='ninguno libre';el.appendChild(c);return;
+}
+items.forEach(item=>{
+const c=document.createElement('span');c.className='disp-chip';
+const dot=document.createElement('span');dot.className='disp-dot';
+c.appendChild(dot);c.appendChild(document.createTextNode(item));
+el.appendChild(c);
+});
+}
+renderChips('dispTractos',tractosLibres);
+renderChips('dispSemis',semisLibres);
+renderChips('dispConductores',conductoresLibres);
 }
 
 function tick(){const el=document.getElementById('sbTime');if(el)el.textContent=new Date().toLocaleTimeString('es-CL',{hour12:false});}
