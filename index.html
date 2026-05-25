@@ -267,7 +267,7 @@ html,body{height:100%;font-family:'Syne',sans-serif;background:var(--bg);color:v
 <div class="disp-header-title">Disponibles · <span id="dispCount">0</span></div>
 <div class="disp-toggle" id="dispToggle">▾</div>
 </div>
-<div class="disp-body" id="dispBody">
+<div class="disp-body" id="dispBody" style="">
 <div class="disp-group">
 <div class="disp-group-label">Tractos libres</div>
 <div class="disp-chips" id="dispTractos"></div>
@@ -471,7 +471,7 @@ function saveCustomListas(obj) { localStorage.setItem(STORAGE_LISTAS,JSON.string
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (id==='ops') renderTrips();
+  if (id==='ops') { renderTrips(); renderDisponibles(); }
   if (id==='dispatch') populateSelects();
   if (id==='admin') renderAdmin();
 }
@@ -658,6 +658,7 @@ function deleteTrip(id) {
   const url=localStorage.getItem('pola_script_url');
   if (url) fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'deleteViaje',id})}).catch(()=>{});
   renderTrips();
+  renderDisponibles();
 }
 
 function renderTrips() {
@@ -768,6 +769,7 @@ async function cargarViajes() {
       merged.sort((a,b)=>Number(b.id)-Number(a.id));
       localStorage.setItem(STORAGE_KEY,JSON.stringify(merged));
       renderTrips();
+      renderDisponibles();
     }
   } catch(e){console.log('Sync error:',e);}
 }
